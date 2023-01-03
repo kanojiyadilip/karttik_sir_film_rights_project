@@ -1,0 +1,200 @@
+<!-- 
+      <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+        Collapse Toggle
+      </button>
+    <div id="collapseExample" [ngbCollapse]="isCollapsed">
+      <div class="card">
+        <div class="card-body">
+          You can collapse this card by clicking Toggle Button. This is example from ItSolutionStuff.com.
+        </div>
+      </div>
+    </div> -->
+<br>
+<div class="cardshadow" >
+    <button type="button" class="btn expBtn btn-outline-primary" style="width: 100%;" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+        {{title}}
+    </button>
+    <br>
+    <div id="collapseExample" [ngbCollapse]="isCollapsed" style="margin-bottom: 10px;">
+        <!-- <label>{{title}}</label>  -->
+        <button class="btn btn-info" style="float: right;" (click)="addrow()">Add New</button>
+        <br>
+
+        <div class="row" style="margin: 10px 0px 0px; text-align: center; margin-bottom: -15px;" *ngIf="sbr.length>0 || add">
+            <div class="col-md-2 pa">
+                <label class="lf">{{title}}</label>
+            </div>
+            <div class="col-md-1 pa">
+                <label class="lf">Nature of Rights</label>
+            </div>
+            <div class="col-md-1 pa">
+                <label class="lf">Delivery/TCQC</label>
+            </div>
+            <div class="col-md-1 pa">
+                <label class="lf">language</label>
+            </div>
+            <div class="col-md-1 pa">
+                <label class="lf">Commencement</label>
+            </div>
+            <div class="col-md-1 pa">
+                <label class="lf">Expiry</label>
+            </div>
+            <div class="col-md-1 pa">
+                <label class="lf">Exl. language</label>
+            </div>
+            <div class="col-md-1 pa">
+                <label class="lf">Territories</label>
+            </div>
+            <div class="col-md-1 pa">
+                <label class="lf">Excl. Territories</label>
+            </div>
+            <div class="col-md-1 pa">
+                <label class="lf">No. of Runs</label>
+            </div>
+        </div>    
+                
+        <div class="row" style="margin: 20px 0px;" *ngIf="add">
+            <div class="col-md-2 pa">
+                <select class="form-select hights" [(ngModel)]="rowObj.sbr" name="sbr">
+                    <option *ngFor="let item of dropdownList">{{item.item_text}}</option>
+                </select>
+            </div> 
+            <div class="col-md-1 pa">
+                <select class="form-select hights" [(ngModel)]="rowObj.nor" name="sbr" >
+                    <option *ngFor="let item of natureOfRight">{{item.item_text}}</option>
+                </select>
+            </div>  
+            <div class="col-md-1 pa">
+                <input class="form-control" type="date" min="2022-12-28" placeholder="Delivery/TCQC" [(ngModel)]="rowObj.dtc" name="dtcq" />
+            </div>  
+            <div class="col-md-1 pa">
+                <!-- <input class="form-control" type="text" placeholder="language" [(ngModel)]="rowObj.lng" name="lng" /> -->
+                <ng-multiselect-dropdown
+                        [placeholder]="''"
+                        [settings]="dropdownSettings"
+                        [data]="multiSelectDrop"
+                        [(ngModel)]="rowObj.lng"
+                        (onSelect)="onItemSelect($event)"
+                        (onSelectAll)="onSelectAll($event)"
+                    >
+                </ng-multiselect-dropdown> 
+            </div>
+            <div class="col-md-1 pa">
+                <input class="form-control" type="date" min="2022-12-28" placeholder="Commencement" [(ngModel)]="rowObj.com" name="com" />
+            </div>
+            <div class="col-md-1 pa">
+                <input class="form-control" type="date" min="2022-12-28" placeholder="Expiry" [(ngModel)]="rowObj.exp" name="exp" />
+            </div>
+            <div class="col-md-1 pa">
+                <!-- <input class="form-control" type="text" placeholder="Excluded language" [(ngModel)]="rowObj.elg" name="elg" /> -->
+
+                <ng-multiselect-dropdown
+                        [placeholder]="''"
+                        [settings]="dropdownSettings"
+                        [data]="multiSelectDrop"
+                        [(ngModel)]="rowObj.elg"
+                        (onSelect)="onItemSelectExlang($event)"
+                        (onSelectAll)="onSelectAllExlang($event)"
+                    >
+                </ng-multiselect-dropdown> 
+                
+            </div>
+            <div class="col-md-1 pa">
+                <input class="form-control" type="text" placeholder="Territories" [(ngModel)]="rowObj.ter" name="ter" />
+            </div>
+            <div class="col-md-1 pa">
+                <input class="form-control" type="text" placeholder="Excl. Territories" [(ngModel)]="rowObj.etr" name="etr" />
+            </div>
+            <div class="col-md-1 pa">
+                <input class="form-control" type="text" placeholder="No. of Runs" [(ngModel)]="rowObj.nrn" name="ter" />
+            </div>
+            <div class="col-md-1 hights pa">
+                <button class="btn btn-success" (click)="addNew(rowObj)"><i class="fa fa-check"></i></button>
+                <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+            </div>
+        </div> 
+
+
+
+        <div class="row" style="margin: 20px 0px;" *ngFor="let ele of sbr; let i = index">
+            <div class="col-md-2 pa">
+                <select class="form-select hights" [(ngModel)]="ele.sbr" [disabled]="ele.action" name="sbr-{{i}}">
+                    <option *ngFor="let item of dropdownList">{{item.item_text}}</option>
+                </select>
+            </div>
+            
+
+            <!-- <div class="col-md-1">
+            <input class="form-control" type="text" placeholder="Territories" [(ngModel)]="ele.ter" name="ter-{{i}}" [disabled]="ele.action"/>
+            </div>
+            <div class="col-md-1">
+            <input class="form-control" type="text" placeholder="Commencement" [(ngModel)]="ele.com" name="com-{{i}}" [disabled]="ele.action"/>
+            </div>
+            <div class="col-md-1">
+            <input class="form-control" type="text" placeholder="Expiry" [(ngModel)]="ele.exp" name="ele-{{i}}" [disabled]="ele.action"/>
+            </div>     -->
+
+            <div class="col-md-1 pa">
+                <select class="form-select hights" [(ngModel)]="ele.nor" name="sbr" >
+                    <option *ngFor="let item of natureOfRight">{{item.item_text}}</option>
+                </select>
+            </div> 
+            <div class="col-md-1 pa">
+                <input class="form-control" type="date" min="2022-12-28"placeholder="Delivery/TCQC" [(ngModel)]="ele.dtc" name="dtcq" />
+            </div>  
+            <div class="col-md-1 pa">
+                <!-- <input class="form-control" type="text" placeholder="language" [(ngModel)]="ele.lng" name="lan" /> -->
+                <ng-multiselect-dropdown
+                    [placeholder]="''"
+                    [settings]="dropdownSettings"
+                    [data]="multiSelectDrop"
+                    [(ngModel)]="ele.lng"
+                    (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)"
+                >
+                </ng-multiselect-dropdown> 
+            </div>
+            <div class="col-md-1 pa">
+                <input class="form-control" type="date" min="2022-12-28"placeholder="Commencement" [(ngModel)]="ele.com" name="com" />
+            </div>
+            <div class="col-md-1 pa">
+                <input class="form-control" type="date" min="2022-12-28"placeholder="Expiry" [(ngModel)]="ele.exp" name="exp" />
+            </div>
+            <div class="col-md-1 pa">
+                <!-- <input class="form-control" type="text" placeholder="Excluded language" [(ngModel)]="ele.elg" name="elg" /> -->
+
+                <ng-multiselect-dropdown
+                    [placeholder]="''"
+                    [settings]="dropdownSettings"
+                    [data]="exlng"
+                    [(ngModel)]="ele.elg"
+                    (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)"
+                >
+                </ng-multiselect-dropdown> 
+            </div>
+            <div class="col-md-1 pa">
+                <input class="form-control" type="text" placeholder="Territories" [(ngModel)]="ele.ter" name="ter" />
+            </div>
+            <div class="col-md-1 pa">
+                <input class="form-control" type="text" placeholder="Excl. Territories" [(ngModel)]="ele.etr" name="etr" />
+            </div>
+            <div class="col-md-1 pa">
+                <input class="form-control" type="text" placeholder="No. of Runs" [(ngModel)]="ele.nrn" name="nrn" />
+            </div>
+            <div class="col-md-1 hights pa">
+                <button class="btn btn-success" (click)="editrow(i)"><i class="fa fa-edit"></i></button>
+                <button class="btn btn-danger" (click)="remove(ele, i)"><i class="fa fa-trash-o"></i></button>   
+            </div>
+            <!-- <div class="col-md-1 hights">
+                <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+            </div> -->
+        </div> 
+    </div>
+</div>
+
+
+
+
+

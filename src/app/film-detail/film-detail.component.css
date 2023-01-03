@@ -1,0 +1,16 @@
+.main-card{
+    margin: 15px;
+    padding: 10px;
+    border: 1px solid #b7b7b7db;
+    border-radius: 13px;
+    background-color: #f0f0f0;
+}
+
+label{
+    font-weight: 700;
+}
+
+.hights{
+    height: 100%;
+}
+

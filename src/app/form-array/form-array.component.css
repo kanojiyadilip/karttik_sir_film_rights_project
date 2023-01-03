@@ -1,0 +1,37 @@
+.main-card{
+    margin: 15px;
+    padding: 10px;
+    border: 1px solid #b7b7b7db;
+    border-radius: 13px;
+    background-color: #f0f0f0;
+}
+
+label{
+    font-weight: 700;
+}
+
+.hights{
+    /* height: 100%; */
+    max-height: 35px;
+}
+
+.pa{
+    padding: 0 1px;
+}
+
+.lf{
+    font-size: 8px;
+}
+
+.expBtn{
+    background: #396ec4;
+    color: #fff;
+}
+
+.cardshadow{
+    border: 1px solid #d6d6d6;
+    border-radius: 5px;
+    text-align: center;
+    background: white;
+    box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+}

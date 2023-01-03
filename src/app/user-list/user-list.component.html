@@ -1,0 +1,39 @@
+<div style="padding: 50px;">
+    <div style="display: flex; gap:20px; width: 500px;  margin-bottom: 30px;">
+      <input type="date" placeholder="Start date" class="form-control"/>
+      <input type="date" placeholder="End date" class="form-control"/>
+      <button class="btn btn-success" style="float: right;" >Search</button>
+    </div>
+    <button class="btn btn-success" style="float: right;" [routerLink]="['/user']" [queryParams]="{ createNew : 1 }">Add New</button>
+    <table class="table table-striped" style="border: 1px solid black">
+        <thead>
+            <tr>
+          <th scope="col">Sr.</th>
+                <th scope="col">Action</th>
+                <th scope="col">Name of the Assignor</th>
+                <th scope="col">Name of assignee</th>
+                <th scope="col">Date of Agreement</th>
+                <th scope="col">Account</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let country of countries; index as i">
+                <th scope="row">{{ i + 1 }}</th>
+          <td>
+            <div style="display: flex; gap: 15px;">
+            <i class="fa fa-pencil" aria-hidden="true" [routerLink]="['/user']" [queryParams]="{ createNew : 0 }"></i>
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            </div>
+          </td>
+                <td>	
+                    {{ country.name }}
+                </td>
+                <td>
+                  {{ country.name }}
+              </td>
+                <td>{{ country.area }}</td>
+                <td>{{ country.population }}</td>
+            </tr>
+        </tbody>
+    </table>
+  </div>

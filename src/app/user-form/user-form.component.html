@@ -1,0 +1,190 @@
+
+
+<div class="main-card">
+    <div>
+        <button class="btn btn-success">Sales</button>
+        <button class="btn btn-success">Purchase</button>
+    </div>
+    <form #frm="ngForm" (ngSubmit)="submit(frm)">
+        <div class="row">
+            <div class="col-md-4">
+                <label>Name of the assignor</label>
+                <input class="form-control" type="text" [(ngModel)]="nameOfAssignor" placeholder="Name of the assignor" name="nameOfAssignor"/>
+            </div>
+            <div class="col-md-4">
+                <label>Date of assignor</label>
+                <!-- <ngb-datepicker id='gfg' [(ngModel)]="doa"></ngb-datepicker> -->
+                <!-- <ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next"></ngb-datepicker> -->
+                <input type="date" placeholder="Start date" [(ngModel)]="dateOfAssignor" class="form-control" name="dateOfAssignor" />
+
+            </div>
+            <div class="col-md-4">
+                <label>Name of assignee</label>
+                <input class="form-control" type="text" [(ngModel)]="nameOfAssignee" placeholder="Name of assignee" name="nameOfAssignee"/>
+            </div>
+            <!-- <div class="col-md-3">
+                <label>Account</label>
+                <select class="form-select hights" [(ngModel)]="accountVal"  name="accountVal" style="height: 33px">
+                    <option *ngFor="let item of account" [value]="item.id">{{item.text}}</option>
+                </select>
+            </div>  -->
+        </div>  
+        
+        <button type="submit" class="btn btn-success" style="float: right; margin-top: 10px;"> Submit</button>
+
+        <br>
+
+
+        <!-- <div class="row">
+            <div class="col-md-4">
+                <label>Excluded Territories</label>
+                <input class="form-control" type="text" placeholder="Excluded Territories"/>
+            </div>
+            <div class="col-md-4">
+                <label>Right Assigned</label>
+                <input class="form-control" type="text" placeholder="Right Assigned"/>
+            </div>
+            <div class="col-md-4">
+                <label>Excluded Rights</label>
+                <input class="form-control" type="text" placeholder="Excluded Rights"/>
+            </div>
+        </div>    
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-4">
+                <label>Assigned Language</label>
+                <input class="form-control" type="text" placeholder="Assigned Language"/>
+            </div>
+            <div class="col-md-4">
+                <label>Excluded Language</label>
+                <input class="form-control" type="text" placeholder="Excluded Language"/>
+            </div>
+            <div class="col-md-4">
+                <label>Period / Tenure</label>
+                <input class="form-control" type="text" placeholder="Period / Tenure"/>
+            </div>
+        </div>    
+
+        <br> 
+        
+        <div class="row">
+            <div class="col-md-4">
+                <label>Commencement</label>
+                <input class="form-control" type="text" placeholder="Commencement"/>
+            </div>
+            <div class="col-md-4">
+                <label>Expiry</label>
+                <input class="form-control" type="text" placeholder="Expiry"/>
+            </div>
+            <div class="col-md-4">
+                <label>Number of Films</label>
+                <input class="form-control" type="text" placeholder="Number of Films"/>
+            </div>
+        </div>     -->
+
+        <!-- <br>  
+        <hr>
+        <br>
+        <br>   -->
+        
+        <!-- <label>SATELLITE BROADCASTING RIGHTS</label> <button class="btn btn-info" style="float: right;" (click)="addrow()">Add New</button>
+        <div class="row" style="margin: 20px 0px;" *ngFor="let ele of sbr; let i = index">
+            <div class="col-md-3">
+            <select class="form-select hights" [(ngModel)]="ele.sbr" [disabled]="ele.action">
+                    <option *ngFor="let item of dropdownList">{{item.item_text}}</option>
+                </select>
+            </div>    
+            <div class="col-md-3">
+            <input class="form-control" type="text" placeholder="Territories" [(ngModel)]="ele.ter" [disabled]="ele.action"/>
+            </div>
+            <div class="col-md-2">
+            <input class="form-control" type="text" placeholder="Commencement" [(ngModel)]="ele.com" [disabled]="ele.action"/>
+            </div>
+            <div class="col-md-2">
+            <input class="form-control" type="text" placeholder="Expiry" [(ngModel)]="ele.exp" [disabled]="ele.action"/>
+            </div>
+            <div class="col-md-1 hights">
+                <button class="btn btn-success" (click)="editrow(i)"><i class="fa fa-edit"></i></button>
+                <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>   
+            </div>
+        </div>  -->
+        
+        
+        <!-- <div class="row" style="margin: 20px 0px;" *ngIf="add">
+            <div class="col-md-3">
+                <select class="form-select hights" [(ngModel)]="rowObj.sbr" >
+                    <option *ngFor="let item of dropdownList">{{item.item_text}}</option>
+                </select>
+            </div>    
+            <div class="col-md-3">
+                <input class="form-control" type="text" placeholder="Territories" [(ngModel)]="rowObj.ter" />
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" type="text" placeholder="Commencement" [(ngModel)]="rowObj.com" />
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" type="text" placeholder="Expiry" [(ngModel)]="rowObj.exp" />
+            </div>
+            <div class="col-md-1 hights">
+                <button class="btn btn-success" (click)="addNew(rowObj)"><i class="fa fa-check"></i></button>
+                <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+            </div>
+        </div>  -->
+        
+
+    </form>
+</div>
+
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <p>createNew =>  {{createNew}}</p> -->
+
+<div style="padding: 30px;" *ngIf="!createNew">
+    <h3>List of Films</h3><button class="btn btn-success" style="float: right;" [routerLink]="['/film-detail']"> Add New Film</button>
+  <table class="table table-striped" style="border: 1px solid black">
+      <thead>
+          <tr>
+        <th scope="col">Sr.</th>
+              <th scope="col">Action</th>
+              <th scope="col">Film Name</th>
+              <th scope="col">Director</th>
+              <th scope="col">year of Release</th>
+              <th scope="col">Censor Grade</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let country of countries; index as i">
+              <th scope="row">{{ i + 1 }}</th>
+        <td>
+          <div style="display: flex; gap: 15px;">
+          <i class="fa fa-pencil" aria-hidden="true" [routerLink]="['/film-detail']"></i>
+          <i class="fa fa-eye" aria-hidden="true"></i>
+          </div>
+        </td>
+              <td>	
+                  {{ country.name }}
+              </td>
+              <td>
+                {{ country.director }}
+            </td>
+              <td>{{ country.yearOfRelease }}</td>
+              <td>{{ country.censorGrade }}</td>
+          </tr>
+      </tbody>
+  </table>
+</div>

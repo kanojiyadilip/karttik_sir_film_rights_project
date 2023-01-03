@@ -1,0 +1,178 @@
+
+<h3 style="margin: 10px 15px; font-weight: 800;">Film details</h3>
+<!-- <app-add-chip (getChips)="doSomething($event)"></app-add-chip> -->
+<div class="main-card">
+    <form>
+        <!-- <div class="row">
+            <div class="col-md-4">
+                <label>Name of the assignor</label>
+                <input class="form-control" type="text" placeholder="Name of the assignor" name="nos"/>
+            </div>
+            <div class="col-md-4">
+                <label>Date of assignor</label>
+                <input type="date" placeholder="Start date" class="form-control" name="st"/>
+
+            </div>
+            <div class="col-md-4">
+                <label>Territories</label>
+                <input class="form-control" type="text" placeholder="Territories" name="en"/>
+            </div>
+        </div>  
+
+
+        <br>
+
+
+        <div class="row">
+            <div class="col-md-4">
+                <label>Excluded Territories</label>
+                <input class="form-control" type="text" placeholder="Excluded Territories" name="ext"/>
+            </div>
+            <div class="col-md-4">
+                <label>Right Assigned</label>
+                <input class="form-control" type="text" placeholder="Right Assigned" name="rs"/>
+            </div>
+            <div class="col-md-4">
+                <label>Excluded Rights</label>
+                <input class="form-control" type="text" placeholder="Excluded Rights" name="er"/>
+            </div>
+        </div>    
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-4">
+                <label>Assigned Language</label>
+                <input class="form-control" type="text" placeholder="Assigned Language"/>
+            </div>
+            <div class="col-md-4">
+                <label>Excluded Language</label>
+                <input class="form-control" type="text" placeholder="Excluded Language"/>
+            </div>
+            <div class="col-md-4">
+                <label>Period / Tenure</label>
+                <input class="form-control" type="text" placeholder="Period / Tenure"/>
+            </div>
+        </div>    
+
+        <br> 
+        
+        <div class="row">
+            <div class="col-md-4">
+                <label>Commencement</label>
+                <input class="form-control" type="text" placeholder="Commencement"/>
+            </div>
+            <div class="col-md-4">
+                <label>Expiry</label>
+                <input class="form-control" type="text" placeholder="Expiry"/>
+            </div>
+            <div class="col-md-4">
+                <label>Number of Films</label>
+                <input class="form-control" type="text" placeholder="Number of Films"/>
+            </div>
+        </div>     -->
+
+        <div class="row">
+            <div class="col-md-4">
+                <label>Film Name</label>
+                <input class="form-control" type="text" placeholder="Film Name" [(ngModel)]="filmName" name="nos"/>
+            </div>
+            <div class="col-md-4">
+                <label>Language</label>
+                <!-- <input type="text" placeholder="Start date" class="form-control" [(ngModel)]="language" name="st"/> -->
+
+                <ng-multiselect-dropdown
+                    [placeholder]="'Select Language'"
+                    [settings]="dropdownSettings"
+                    [data]="multiSelectDrop"
+                    [(ngModel)]="selectedItems"
+                    (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)"
+                    [ngModelOptions]="{standalone: true}"
+                >
+              </ng-multiselect-dropdown>                
+
+            </div>
+            <div class="col-md-4">
+                <label>Version</label>
+                <select class="form-select" style="height: 34px" [(ngModel)]="version" name="sbr" >
+                    <option *ngFor="let item of versionList">{{item.type}}</option>
+                </select>
+                <!-- <input class="form-control" type="text" placeholder="Territories" name="en"/> -->
+            </div>
+        </div>  
+
+
+        <br>
+
+
+
+        <div class="row">
+            <div class="col-md-4">
+                <label>Year of Release</label>
+                <input type="date" placeholder="Year of Release" class="form-control" name="st" [(ngModel)]="yearOfRelease"/>
+            </div>
+            <div class="col-md-4">
+                <label>Pro. Banner</label>
+                <app-add-chip [chip]="proBanner" (getChips)="pBann($event)"></app-add-chip>
+                <!-- <input class="form-control" type="text" placeholder="Right Assigned" name="rs"/> -->
+            </div>
+            <div class="col-md-4">
+                <label>Producer</label>
+                <app-add-chip [chip]="producer" (getChips)="produ($event)"></app-add-chip>
+            </div>
+        </div>    
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-4">
+                <label>Director</label>
+                <input class="form-control" type="text" placeholder="Director" name="dir" [(ngModel)]="director"/>
+            </div>
+            <div class="col-md-4">
+                <label>Star Cast</label>
+                <app-add-chip [chip]="starCast" (getChips)="sCast($event)"></app-add-chip>
+                <!-- <input class="form-control" type="text" placeholder="Excluded Language"/> -->
+            </div>
+            <div class="col-md-4">
+                <label>M. Director</label>
+                <app-add-chip [chip]="mDirector" (getChips)="mdir($event)"></app-add-chip>
+                <!-- <input class="form-control" type="text" placeholder="Period / Tenure"/> -->
+            </div>
+        </div>    
+
+        <br> 
+        
+        <div class="row">
+            <div class="col-md-4">
+                <label>Censor Grade</label>
+                <select class="form-select" style="height: 34px" [(ngModel)]="censorGrade" name="sbr" >
+                    <option *ngFor="let item of censorGradeList">{{item.grade}}</option>
+                </select>
+            </div>
+            <!-- <div class="col-md-4">
+                <label>Expiry</label>
+                <input class="form-control" type="text" placeholder="Expiry"/>
+            </div>
+            <div class="col-md-4">
+                <label>Number of Films</label>
+                <input class="form-control" type="text" placeholder="Number of Films"/>
+            </div> -->
+        </div>  
+        <br>  
+        <hr>
+        <!-- <br>
+        <br>        -->
+
+        <ng-container *ngFor="let item of formArrayData">
+            <!-- <p>{{item.title}}</p> -->
+            <app-form-array [title]="item.title" [dropdownList]="item.dropdownList"></app-form-array>
+        </ng-container>
+        
+
+        <br><br>
+        
+        <button type="submit" class="btn btn-success" style="width: 100%;" (click)="submit()">click here to Save this all data</button>
+    </form>
+</div>
