@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 // import { abort } from 'proścess';
 import swal from 'sweetalert2';
+import { ServicesService } from '../services.service'
 
 interface Country {
 	name: string;
@@ -61,7 +62,7 @@ export class UserFormComponent implements OnInit {
   countries = COUNTRIES;
   createNew: Number = 1;
 
-  constructor(private route: ActivatedRoute) { 
+  constructor(private route: ActivatedRoute, private service: ServicesService) { 
     this.createNew = Number(this.route.snapshot.queryParamMap.get('createNew'));
     console.log("==createNew==>",this.createNew);
   }
@@ -84,6 +85,8 @@ export class UserFormComponent implements OnInit {
   nameOfAssignor: any = "Harish GALA";
   dateOfAssignor: any = "2022-12-16";
   nameOfAssignee: any = "Harish GALA";
+
+  userid: any;
 
   ngOnInit(): void {
     this.dropdownList = [
@@ -155,6 +158,10 @@ export class UserFormComponent implements OnInit {
     setTimeout(()=>{
       this.ref = true;
     },1000)
+
+    this.userid = this.route.snapshot.queryParams['userid'];
+    console.log("=====uId=====>", this.userid);
+
   }
 
   ref: boolean = false;
@@ -203,6 +210,20 @@ export class UserFormComponent implements OnInit {
   }
 
   submit(data:any){
-    console.log("====data====>", data);
+    console.log("<====data====>", data);
+    console.log("<====data====>", data.value);
+    let val = {
+      nameOfAssignor: data.value.nameOfAssignor,
+      nameOfAssignee: data.value.nameOfAssignee,
+      dateOfAgreement: data.value.dateOfAssignor, 
+    }
+
+    // return false;
+    // let req = JSON.stringify(val);
+    // console.log("============>>>>>>>>>",req);
+    this.service.saveAssign(val).subscribe(res=>{
+      console.log("===vv===>",res);
+    });
+    // console.log("===v===>",res);
   }
 }

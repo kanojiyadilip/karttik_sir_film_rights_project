@@ -13,7 +13,7 @@
 <br>
 <div class="cardshadow" >
     <button type="button" class="btn expBtn btn-outline-primary" style="width: 100%;" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-        {{title}}
+        {{title.title}}
     </button>
     <br>
     <div id="collapseExample" [ngbCollapse]="isCollapsed" style="margin-bottom: 10px;">
@@ -23,7 +23,7 @@
 
         <div class="row" style="margin: 10px 0px 0px; text-align: center; margin-bottom: -15px;" *ngIf="sbr.length>0 || add">
             <div class="col-md-2 pa">
-                <label class="lf">{{title}}</label>
+                <label class="lf">{{title.title}}</label>
             </div>
             <div class="col-md-1 pa">
                 <label class="lf">Nature of Rights</label>
@@ -56,8 +56,8 @@
                 
         <div class="row" style="margin: 20px 0px;" *ngIf="add">
             <div class="col-md-2 pa">
-                <select class="form-select hights" [(ngModel)]="rowObj.sbr" name="sbr">
-                    <option *ngFor="let item of dropdownList">{{item.item_text}}</option>
+                <select class="form-select hights" [(ngModel)]="rowObj.sbr" name="sbr" (change)="setSelectedStatus($event)">
+                    <option *ngFor="let item of dropdownList" [value]="item.item_id">{{item.item_text}}</option>
                 </select>
             </div> 
             <div class="col-md-1 pa">
@@ -110,7 +110,7 @@
                 <input class="form-control" type="text" placeholder="No. of Runs" [(ngModel)]="rowObj.nrn" name="ter" />
             </div>
             <div class="col-md-1 hights pa">
-                <button class="btn btn-success" (click)="addNew(rowObj)"><i class="fa fa-check"></i></button>
+                <button class="btn btn-success" (click)="addNew(rowObj, title)"><i class="fa fa-check"></i></button>
                 <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
             </div>
         </div> 
@@ -119,8 +119,8 @@
 
         <div class="row" style="margin: 20px 0px;" *ngFor="let ele of sbr; let i = index">
             <div class="col-md-2 pa">
-                <select class="form-select hights" [(ngModel)]="ele.sbr" [disabled]="ele.action" name="sbr-{{i}}">
-                    <option *ngFor="let item of dropdownList">{{item.item_text}}</option>
+                <select class="form-select hights" [(ngModel)]="rowObj.sbr" [disabled]="ele.action" name="sbr-{{i}}" (change)="setSelectedStatus($event)">
+                    <option *ngFor="let item of dropdownList" [value]="item.item_id">{{item.item_text}}</option>
                 </select>
             </div>
             

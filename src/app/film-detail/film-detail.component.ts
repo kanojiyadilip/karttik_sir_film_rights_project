@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute } from '@angular/router';
+import { ServicesService } from '../services.service'
 import swal from 'sweetalert2';
 
 interface Country {
@@ -55,7 +57,7 @@ export class FilmDetailComponent implements OnInit {
 
   countries = COUNTRIES;
 
-  constructor() { }
+  constructor(private service: ServicesService, private route: ActivatedRoute) { }
 
   dropdownList:any = [];
   selectedItems:any = [];
@@ -87,6 +89,7 @@ export class FilmDetailComponent implements OnInit {
 
 
   multiSelectDrop: any = [];
+  userid: any;
   ngOnInit(): void {
     this.dropdownList = [
       { item_id: 1, item_text: 'Satellite Broadcasting Rights - Free & Pay / Subsciption TV' },
@@ -185,10 +188,16 @@ export class FilmDetailComponent implements OnInit {
       censorGrade: 'A'
     }
     this.fillData(data);
+
+    this.userid = this.route.snapshot.queryParams['userid'];
+    console.log("==========>", this.userid);
   }
+
+
 
   formArrayData = [
     {
+      id: 1,
       title: 'SATELLITE BROADCASTING RIGHTS',
       dropdownList: [
         { item_id: 1, item_text: 'Satellite Broadcasting Rights - Free & Pay / Subsciption TV' },
@@ -199,6 +208,7 @@ export class FilmDetailComponent implements OnInit {
       ]
     },
     {
+      id: 2,
       title: 'VIDEO ON DEMAND THROUGH CABLE, SATELLITE OR INTERNET',
       dropdownList: [
         { item_id: 1, item_text: 'nVOD' },
@@ -209,6 +219,7 @@ export class FilmDetailComponent implements OnInit {
       ]
     },
     {
+      id: 3,
       title: 'INTERNET / NEW MEDIA RIGHTS',
       dropdownList: [
         { item_id: 1, item_text: 'YouTube / Daily Motion Rights' },
@@ -219,6 +230,7 @@ export class FilmDetailComponent implements OnInit {
       ]
     },
     {
+      id: 4,
       title: 'CABLE TELEVISION RIGHTS',
       dropdownList: [
         { item_id: 1, item_text: 'Free Cable TV' },
@@ -227,6 +239,7 @@ export class FilmDetailComponent implements OnInit {
       ]
     },
     {
+      id: 5,
       title: 'TERRESTRIAL TELEVISION',
       dropdownList: [
         { item_id: 1, item_text: 'Free Terrestrial TV' },
@@ -234,6 +247,7 @@ export class FilmDetailComponent implements OnInit {
       ]
     },
     {
+      id: 6,
       title: 'Anciliary / Other RIGHTS',
       dropdownList: [
         { item_id: 1, item_text: 'Music Rights' },
@@ -356,6 +370,27 @@ export class FilmDetailComponent implements OnInit {
       '',
       'success'
     )
+
+    let langId = this.selectedItems.map((item:any)=>item.item_id)
+
+    let val = {
+      assign_id: this.userid,
+      nameOfFilm: this.filmName,
+      language: langId,
+      version: this.version,
+      yearOfRelease: this.yearOfRelease,
+      director: this.director,
+      censerGrade: this.censorGrade,
+      proBanner: this.proBanner,
+      producer: this.producer,
+      starCast: this.starCast,
+      mDirector: this.mDirector,
+      fRights: this.fRights
+    }
+
+    this.service.createFilm(val).subscribe(res=>{
+      console.log("===v===>",res);
+    });
   }
 
   fillData(data: any){
@@ -439,6 +474,30 @@ export class FilmDetailComponent implements OnInit {
     let newArr = this.sbr.filter((e:any, idx:any)=>(idx!==i));
     this.sbr = newArr;
   }
+
+  arrayData(data: any){
+    console.log("------form-array-data------>", data);
+    let arData: any = [];
+    data.forEach((ele:any) => {
+      let obj = {
+        natureOfRight: ele.nor,
+        deliveryTcqc: ele.dtc,
+        language: ele.lng.map((item:any)=>item.item_id),
+        exlLanguage: ele.elg.map((item:any)=>item.item_id),
+        commencement: ele.com,
+        expiry: ele.exp,
+        territories: ele.ter,
+        exclTerritories: ele.etr,
+        noOfRuns: ele.nor,
+        subCategory: ele.sbr,
+        category: ele.category
+      }
+      arData.push(obj);
+    });
+    this.fRights = arData;
+  }
+
+  fRights: any = [];
   
 
 }

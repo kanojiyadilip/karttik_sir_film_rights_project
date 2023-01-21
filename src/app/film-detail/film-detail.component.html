@@ -167,7 +167,7 @@
 
         <ng-container *ngFor="let item of formArrayData">
             <!-- <p>{{item.title}}</p> -->
-            <app-form-array [title]="item.title" [dropdownList]="item.dropdownList"></app-form-array>
+            <app-form-array (getFormArrayData)="arrayData($event)" [title]="{title: item.title, id: item.id}" [dropdownList]="item.dropdownList"></app-form-array>
         </ng-container>
         
 

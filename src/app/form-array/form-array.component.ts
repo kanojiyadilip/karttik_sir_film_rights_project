@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
@@ -10,6 +10,7 @@ export class FormArrayComponent implements OnInit {
 
   @Input() title: any;
   @Input() dropdownList: any;
+  @Output() getFormArrayData = new EventEmitter<any>();
   natureOfRight: any = [{id: '1', item_text: 'Exclusive'}, {id: '2', item_text: 'Non-Exclusive'}];
   public isCollapsed = true;
 
@@ -112,17 +113,30 @@ export class FormArrayComponent implements OnInit {
 
   add: boolean = false;
 
-  addNew(item:any){
-    console.log("====addNew===>",item);
-    this.sbr.push({...item, action: false});
+  addNew(item:any, cat: any){
+    console.log(cat,"<====addNew===>",item);
+    this.sbr.push({...item,category: cat.id, action: false});
     this.rowObj.sbr = ''; 
     this.add = false;
+    // let sendData = {...this.sbr, category: cat.id}
+    this.getFormArrayData.emit(this.sbr)
   }
 
   remove(item: any, i: any){
     let newArr = this.sbr.filter((e:any, idx:any)=>(idx!==i));
     this.sbr = newArr;
+    this.getFormArrayData.emit(this.sbr)
   }
+
+  selectedStatus: any;
+  public setSelectedStatus(event: any) {
+
+    let selectedOptions = event.target['options'];
+    let selectedIndex = selectedOptions.selectedIndex;
+    let selectElementText = selectedOptions[selectedIndex].text;
+    console.log("------->>>---->>>",selectElementText)
+   }
+   
 
 
 }
