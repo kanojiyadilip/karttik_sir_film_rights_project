@@ -11,6 +11,7 @@ module.exports = {
     getAssign,
     createAssign,
     createFilm,
+    searchClient
 }
 
 function createAssign(data, callback){
@@ -138,4 +139,33 @@ function createFilm(data, callback){
         }
         
     })
+}
+
+// ===============================================================================================================
+
+function searchClient(data, callback){
+
+    let dumData = [{name: "Zee"}, {name: "Sub"}, {name: "Star"}]
+
+    console.log("-<tourData>-", data);
+
+    let dataList = dumData.filter(e=>e.name.toLowerCase().substring(0, data.keys.length)==data.keys.toLowerCase());
+    // assignSchema.find({},(err, doc)=>{
+    //     if(doc){
+            callback({
+                code: 200,
+                msg: 'data get Successfully',
+                data: dataList
+            })
+    //     }
+    //     else{
+    //         console.log("err->", err);
+    //         callback({
+    //             code: 400,
+    //             msg: 'Somthing went wrong.'+err
+    //         })    
+    //     }
+        
+    // })
+    
 }

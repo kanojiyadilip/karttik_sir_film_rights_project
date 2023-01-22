@@ -7,6 +7,8 @@ router.post('/create_assign', createAssign);
 router.get('/get_assign', getAssign);
 
 router.post('/create_film', createFilm);
+router.post('/search_cl', searchClient);
+
 
 module.exports = router;
 
@@ -66,6 +68,34 @@ function createFilm(req,res){
     else {
 
         filmService.createFilm(req.body, function (result) {
+            // if error is there
+            if (result instanceof Error) {
+                res.status(200).json(result)
+            }
+            // if there is no error
+            else {
+                res.status(200).json(result)
+            }
+        })
+    }
+
+        
+}
+
+
+function searchClient(req,res){
+    // console.log("-<req>-", req);
+   console.log("-<>-", req.body);
+    if (req.body.keys == undefined) {
+
+        res.status(200).json({
+            'code': 405,
+            'msg': "parameters missing"
+        })
+    }
+    else {
+
+        filmService.searchClient(req.body, function (result) {
             // if error is there
             if (result instanceof Error) {
                 res.status(200).json(result)

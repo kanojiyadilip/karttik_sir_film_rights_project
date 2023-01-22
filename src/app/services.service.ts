@@ -30,4 +30,8 @@ export class ServicesService {
     return this.http.post(this.baseUrl+'create_film', data)
   }
 
+  searchClientName(data: any) {
+    return this.http.post(this.baseUrl+'search_cl', data)
+  }
+
 }

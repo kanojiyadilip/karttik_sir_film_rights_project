@@ -3,7 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 // import { abort } from 'proścess';
 import swal from 'sweetalert2';
-import { ServicesService } from '../services.service'
+import { ServicesService } from '../services.service';
+import { Subject } from 'rxjs';
+// import 'rxjs/add/operator/debounceTime';
+// import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 interface Country {
 	name: string;
@@ -61,11 +64,18 @@ export class UserFormComponent implements OnInit {
 
   countries = COUNTRIES;
   createNew: Number = 1;
+  modelChanged: Subject<string> = new Subject<string>();
+
 
   constructor(private route: ActivatedRoute, private service: ServicesService) { 
     this.createNew = Number(this.route.snapshot.queryParamMap.get('createNew'));
     console.log("==createNew==>",this.createNew);
   }
+
+  changed(text: string) {
+    this.modelChanged.next(text);
+  }
+
 
   dropdownList:any = [];
   selectedItems:any = [];
@@ -87,6 +97,7 @@ export class UserFormComponent implements OnInit {
   nameOfAssignee: any = "Harish GALA";
 
   userid: any;
+  clientList: any = [{"name": "Zee TV"}];
 
   ngOnInit(): void {
     this.dropdownList = [
@@ -226,4 +237,13 @@ export class UserFormComponent implements OnInit {
     });
     // console.log("===v===>",res);
   }
+
+  search(e:any){
+    console.log("==Search==>",this.nameOfAssignor)
+    this.service.searchClientName({keys: this.nameOfAssignor}).subscribe((res:any)=>{
+      console.log("===searchClientName===>",res);
+      this.clientList = res.data;
+    });
+  }
+
 }

@@ -8,8 +8,12 @@
     <form #frm="ngForm" (ngSubmit)="submit(frm)">
         <div class="row">
             <div class="col-md-3">
-                <label>Name of the assignor</label>
-                <input class="form-control" type="text" [(ngModel)]="nameOfAssignor" placeholder="Name of the assignor" name="nameOfAssignor"/>
+                <label>Name of the assignor D-  {{clientList | json}}</label>
+                <input class="form-control" type="text" [(ngModel)]="nameOfAssignor" (keyup)="search($event)" 
+                placeholder="Name of the assignor" name="nameOfAssignor" list="nameOfAssignor"/>
+                <datalist id="nameOfAssignor">
+                    <option *ngFor="let item of clientList">{{item.name}} </option>
+               </datalist>
             </div>
             <div class="col-md-3">
                 <label>Date of assignor</label>
