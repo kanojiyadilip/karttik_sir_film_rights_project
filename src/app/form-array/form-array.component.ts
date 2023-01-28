@@ -135,7 +135,7 @@ export class FormArrayComponent implements OnInit {
     let selectedIndex = selectedOptions.selectedIndex;
     let selectElementText = selectedOptions[selectedIndex].text;
     console.log("------->>>---->>>",selectElementText)
-   }
+  }
    
 
 

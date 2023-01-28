@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ServicesService } from '../services.service'
 import swal from 'sweetalert2';
 
@@ -57,7 +57,7 @@ export class FilmDetailComponent implements OnInit {
 
   countries = COUNTRIES;
 
-  constructor(private service: ServicesService, private route: ActivatedRoute) { }
+  constructor(private service: ServicesService, private route: ActivatedRoute, private router: Router) { }
 
   dropdownList:any = [];
   selectedItems:any = [];
@@ -365,11 +365,11 @@ export class FilmDetailComponent implements OnInit {
     console.log("=this.starCast=>",this.starCast);
     console.log("=this.mDirector=>",this.mDirector);
     console.log("=this.censorGrade=>",this.censorGrade);
-    swal.fire(
-      'Record update successfully',
-      '',
-      'success'
-    )
+    // swal.fire(
+    //   'Record update successfully',
+    //   '',
+    //   'success'
+    // )
 
     let langId = this.selectedItems.map((item:any)=>item.item_id)
 
@@ -388,8 +388,24 @@ export class FilmDetailComponent implements OnInit {
       fRights: this.fRights
     }
 
-    this.service.createFilm(val).subscribe(res=>{
+    this.service.createFilm(val).subscribe((res:any)=>{
       console.log("===v===>",res);
+      if(res.code == 200){
+        swal.fire(
+          res.msg,
+          '',
+          'success'
+        ).then(() => {
+          this.router.navigate(['/']);
+        })
+      }
+      else{
+        swal.fire(
+          "Something went wrong!",
+          '',
+          'error'
+        )
+      }
     });
   }
 

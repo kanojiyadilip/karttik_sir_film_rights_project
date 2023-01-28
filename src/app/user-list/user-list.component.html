@@ -21,7 +21,7 @@
                 <th scope="row">{{ i + 1 }}</th>
           <td>
             <div style="display: flex; gap: 15px;">
-            <i class="fa fa-pencil" aria-hidden="true" [routerLink]="['/user']" [queryParams]="{ createNew : 0, userid: country._id }"></i>
+            <i class="fa fa-pencil" style="cursor: pointer;" aria-hidden="true" [routerLink]="['/user']" [queryParams]="{ createNew : 0, userid: country._id }"></i>
             <i class="fa fa-eye" aria-hidden="true"></i>
             </div>
           </td>
@@ -31,8 +31,11 @@
                 <td>
                   {{ country.nameOfAssignee }}
               </td>
-                <td>{{ country.dateOfAgreement }}</td>
-                <td>{{ country.accountType }}</td>
+                <td>{{ country.dateOfAgreement | date: 'dd/MM/yyyy' }}</td>
+                <td>
+                  <p *ngIf="country.accountType=='1'">Sale</p>
+                  <p *ngIf="country.accountType=='2'">Purchase</p>
+                </td>
             </tr>
         </tbody>
     </table>

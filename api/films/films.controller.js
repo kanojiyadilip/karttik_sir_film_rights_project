@@ -13,7 +13,7 @@ router.post('/search_cl', searchClient);
 module.exports = router;
 
 function createAssign(req,res){
-    console.log("-<req>-", req);
+    // console.log("-<req>-", req);
    console.log("-<>-", req.body);
     if (req.body.nameOfAssignor == undefined) {
 
@@ -40,7 +40,7 @@ function createAssign(req,res){
 }
 
 function getAssign(req,res){
-    console.log("-<req>-", req);
+    // console.log("-<req>-", req);
 
     filmService.getAssign({}, function (result) {
         // if error is there

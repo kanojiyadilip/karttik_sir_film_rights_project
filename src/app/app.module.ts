@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
 
 import { AppRoutingModule, routingComponents } from './app-routing.module';
@@ -38,6 +39,7 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     NgbNavModule,
     HttpClientModule,
+    AutocompleteLibModule,
     // NgbAlertModule,
     // NgbDatepickerModule,
     NgbModule,

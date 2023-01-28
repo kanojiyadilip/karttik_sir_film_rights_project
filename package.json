@@ -23,6 +23,7 @@
     "@ng-bootstrap/ng-bootstrap": "^12.1.2",
     "@popperjs/core": "^2.10.2",
     "angular-moment-picker": "^0.10.2",
+    "angular-ng-autocomplete": "^2.0.12",
     "bootstrap": "^5.2.3",
     "cors": "^2.8.5",
     "dayjs": "^1.11.6",

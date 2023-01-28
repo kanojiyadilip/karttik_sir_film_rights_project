@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 // import { abort } from 'proścess';
 import swal from 'sweetalert2';
@@ -67,7 +67,7 @@ export class UserFormComponent implements OnInit {
   modelChanged: Subject<string> = new Subject<string>();
 
 
-  constructor(private route: ActivatedRoute, private service: ServicesService) { 
+  constructor(private route: ActivatedRoute, private router: Router, private service: ServicesService) { 
     this.createNew = Number(this.route.snapshot.queryParamMap.get('createNew'));
     console.log("==createNew==>",this.createNew);
   }
@@ -97,9 +97,10 @@ export class UserFormComponent implements OnInit {
   nameOfAssignee: any = "Harish GALA";
 
   userid: any;
-  clientList: any = [{"name": "Zee TV"}];
+  clientList: any; //= [{"name": "Zee TV"}];
 
   ngOnInit(): void {
+    
     this.dropdownList = [
       { item_id: 1, item_text: 'Satellite Broadcasting Rights - Free & Pay / Subsciption TV' },
       { item_id: 2, item_text: 'Satellite VOD' },
@@ -227,13 +228,30 @@ export class UserFormComponent implements OnInit {
       nameOfAssignor: data.value.nameOfAssignor,
       nameOfAssignee: data.value.nameOfAssignee,
       dateOfAgreement: data.value.dateOfAssignor, 
+      accountType: data.value.accountVal
     }
 
     // return false;
     // let req = JSON.stringify(val);
     // console.log("============>>>>>>>>>",req);
-    this.service.saveAssign(val).subscribe(res=>{
+    this.service.saveAssign(val).subscribe((res:any)=>{
       console.log("===vv===>",res);
+      if(res.code == 200){
+        swal.fire(
+          res.msg,
+          '',
+          'success'
+        ).then(() => {
+          this.router.navigate(['/']);
+        })
+      }
+      else{
+        swal.fire(
+          "Something went wrong!",
+          '',
+          'error'
+        )
+      }
     });
     // console.log("===v===>",res);
   }
@@ -245,5 +263,7 @@ export class UserFormComponent implements OnInit {
       this.clientList = res.data;
     });
   }
+
+  
 
 }

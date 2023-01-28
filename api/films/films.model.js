@@ -9,7 +9,7 @@ var assignSchema = new Schema({
         type: String
     },
     accountType: {
-        type: Number
+        type: String
     },
     dateOfAgreement: {
         type: Date,
