@@ -11,6 +11,8 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 // parse application/json
 app.use(bodyParser.json())
+app.use(express.static('./dist/kartik'))
+// D:\my\kartik LAW\kl\kartik\dist\kartik
 const port = 3001;
 
 var mongoose = require('mongoose');
