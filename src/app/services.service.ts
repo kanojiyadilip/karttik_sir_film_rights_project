@@ -1,4 +1,4 @@
-;import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from  'rxjs/operators';
 
@@ -9,7 +9,7 @@ export class ServicesService {
 
   constructor(private http: HttpClient) { }
 
-  baseUrl: any = 'http://localhost:3001/api/films/'; 
+  baseUrl: any = 'http://43.206.104.242:3001/api/films/'; 
   saveAssign(data: any) {
     // let data = {
     //   nameOfAssignor: 'Harish GALA',

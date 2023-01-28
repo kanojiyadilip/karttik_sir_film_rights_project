@@ -11,7 +11,7 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 // parse application/json
 app.use(bodyParser.json())
-app.use(express.static('./dist/kartik'))
+app.use(express.static('../kartik'))
 // D:\my\kartik LAW\kl\kartik\dist\kartik
 const port = 3001;
 
@@ -27,11 +27,18 @@ var corsOptions = {
     origin: 'http://localhost:4200',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
   }
+var corsorigin = {
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+};
 
 // const autoSuggest = require('./assets/autoSuggest.json');
 // app.use('/api/authers', require('./api/authers/auther.controller'));
 // app.use('/api/books', require('./api/books/book.controller'));
-app.use('/api/films', cors(corsOptions), require('./api/films/films.controller'));
+app.use('/api/films', cors(corsorigin), require('./api/films/films.controller'));
+
 // app.post('/search',(req, res)=>{
 // //     console.log("==req===>", req);
 // //     console.log("==autoSuggest===>", autoSuggest);
