@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { DatePipe } from '@angular/common';
+import { ServicesService } from '../services.service'
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form-array',
@@ -8,11 +11,13 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 })
 export class FormArrayComponent implements OnInit {
 
-  @Input() title: any;
+  @Input() data: any;
+  @Input() topData: any;
   @Input() dropdownList: any;
   @Output() getFormArrayData = new EventEmitter<any>();
   natureOfRight: any = [{id: '1', item_text: 'Exclusive'}, {id: '2', item_text: 'Non-Exclusive'}];
   public isCollapsed = true;
+  popupTitle: any = "";
 
   multiSelectDrop: any;
   selectedItems: any;
@@ -21,9 +26,15 @@ export class FormArrayComponent implements OnInit {
   exlng: any;
   exlngSelectedItems: any;
 
-  constructor() { }
+  constructor(private service: ServicesService, private datePipe: DatePipe) { 
+    console.log(this.dropdownList,"==========data==========>",this.data);
+  }
   
   ngOnInit(): void {
+    
+    this.data = this.data.map((e:any)=>({...e, val: "dilip"}))
+    this.data = this.data.map((e:any)=>({...e, subCategoryVal: this.dropdownList.find((item:any)=>item.item_id == e.subCategory).item_text }))
+    // console.log(this.dropdownList.find((item:any)=>item.item_id == 1).item_text,"==========DILIP==========>",this.data);
     
     setTimeout(()=>{
       this.ref = false;
@@ -137,6 +148,79 @@ export class FormArrayComponent implements OnInit {
     console.log("------->>>---->>>",selectElementText)
   }
    
+  displayStyle = "none";
 
+  lanList: any = [
+    { item_id: 1, item_text: 'Hindi' },
+    { item_id: 2, item_text: 'English' },
+    { item_id: 3, item_text: 'Marathi' },
+    { item_id: 4, item_text: 'Gujrati' },
+    { item_id: 5, item_text: 'Telgu' }
+  ];
+  
+  openPopup(val:any) {
+    if(val=="save"){
+      this.popupTitle = "Add New Data"
+    }else{
+      this.popupTitle = "Update Data"
+      console.log("==val==>", val);
+      this.rowObj = {
+        film_right_id: val._id || '',
+        sbr: val.subCategory,
+        nor: val.natureOfRight,
+        dtc: this.datePipe.transform(val.deliveryTcqc,'yyyy-MM-dd'),//'2022-10-12',//val.deliveryTcqc,
+        lng: val.language.map((e:any)=>this.lanList.find((item:any)=>item.item_id == e)),
+        com: this.datePipe.transform(val.commencement,'yyyy-MM-dd'),
+        exp: this.datePipe.transform(val.expiry,'yyyy-MM-dd'),
+        elg: val.exlLanguage.map((e:any)=>this.lanList.find((item:any)=>item.item_id == e)),
+        ter: val.territories,
+        etr: val.exclTerritories,
+        nrn: val.noOfRuns
+      }
+    }
+    this.displayStyle = "block";
+  }
+
+  closePopup() {
+    this.displayStyle = "none";
+  }
+
+  addNewFilmRight(){
+    let req = {
+      film_id: this.topData.filmId,
+      category: this.topData.id,
+      film_right_id: this.rowObj.film_right_id || '',
+      subCategory: this.rowObj.sbr,
+      natureOfRight: this.rowObj.nor,
+      deliveryTcqc: this.rowObj.dtc,
+      language: this.rowObj.lng,
+      exlLanguage: this.rowObj.elg,
+      commencement: this.rowObj.com,
+      expiry: this.rowObj.exp,
+      territories: this.rowObj.ter,
+      exclTerritories: this.rowObj.etr,
+      noOfRuns: this.rowObj.nrn
+    }
+    this.service.createFilmRight(req).subscribe((res:any)=>{
+      console.log("===v===>",res);
+      if(res.code == 200){
+        swal.fire(
+          res.msg,
+          '',
+          'success'
+        ).then(() => {
+          // this.router.navigate(['/']);
+          this.closePopup();
+        })
+      }
+      else{
+        swal.fire(
+          "Something went wrong!",
+          '',
+          'error'
+        )
+      }
+    });
+  }
 
 }

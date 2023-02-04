@@ -10,6 +10,7 @@ export class ServicesService {
   constructor(private http: HttpClient) { }
 
   baseUrl: any = 'http://43.206.104.242:3001/api/films/'; 
+  // baseUrl: any = 'http://localhost:3001/api/films/'; 
   saveAssign(data: any) {
     // let data = {
     //   nameOfAssignor: 'Harish GALA',
@@ -28,6 +29,18 @@ export class ServicesService {
 
   createFilm(data: any) {
     return this.http.post(this.baseUrl+'create_film', data)
+  }
+
+  getFilmList(data: any) {
+    return this.http.post(this.baseUrl+'get_Film_list', data);
+  }
+
+  getFilmRightList(data: any) {
+    return this.http.post(this.baseUrl+'get_Film_right_list', data);
+  }
+
+  createFilmRight(data: any) {
+    return this.http.post(this.baseUrl+'create_film_right', data);
   }
 
   searchClientName(data: any) {

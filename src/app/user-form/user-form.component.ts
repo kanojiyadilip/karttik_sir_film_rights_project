@@ -8,52 +8,6 @@ import { Subject } from 'rxjs';
 // import 'rxjs/add/operator/debounceTime';
 // import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
-interface Country {
-	name: string;
-  director: string;
-	flag: string;
-	yearOfRelease: string;
-	censorGrade: string;
-}
-
-const COUNTRIES: Country[] = [
-  {
-		name: 'Avatar',
-    director: 'James Cameron',
-		flag: 'f/f3/Flag_of_Russia.svg',
-		yearOfRelease: '01/01/2016',
-		censorGrade: 'A',
-	},
-	{
-		name: 'Chhichhore',
-    director: 'Nitesh Tiwari',
-		flag: 'f/f3/Flag_of_Russia.svg',
-		yearOfRelease: '12/09/2015',
-		censorGrade: 'U',
-	},
-	{
-		name: 'Drive',
-    director: 'Tarun Mansukhani',
-		flag: 'c/cf/Flag_of_Canada.svg',
-		yearOfRelease: '01/05/2013',
-		censorGrade: 'VU',
-	},
-	{
-		name: 'The Avengers',
-    director: 'Joss Whedon',
-    flag: 'a/a4/Flag_of_the_United_States.svg',
-		yearOfRelease: '01/02/2013',
-		censorGrade: 'A',
-	},
-	{
-		name: 'Black Adam',
-    director: 'Jaume Collet-Serra',
-		flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-		yearOfRelease: '07/12/2012',
-		censorGrade: 'VU',
-	},
-];
-
 
 @Component({
   selector: 'app-user-form',
@@ -62,7 +16,7 @@ const COUNTRIES: Country[] = [
 })
 export class UserFormComponent implements OnInit {
 
-  countries = COUNTRIES;
+  countries: any =[];
   createNew: Number = 1;
   modelChanged: Subject<string> = new Subject<string>();
 
@@ -173,6 +127,14 @@ export class UserFormComponent implements OnInit {
 
     this.userid = this.route.snapshot.queryParams['userid'];
     console.log("=====uId=====>", this.userid);
+    if(this.userid){
+      
+      this.service.getFilmList({assignId: this.userid}).subscribe((res:any)=>{
+        console.log("===getFilmList===>",res);
+        this.countries = res.data;
+      });
+
+    }
 
   }
 

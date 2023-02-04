@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_BASE_HREF } from '@angular/common';
+import { APP_BASE_HREF, DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
@@ -64,7 +64,7 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
     // DpDatePickerModule
     // CardModule
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: '/' }],
+  providers: [{provide: APP_BASE_HREF, useValue: '/' }, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -21,6 +21,7 @@ export class AddChipComponent implements OnInit {
     console.log("==event====>", event);
     if(event.keyCode===13 && this.val){
       //submit form
+      this.chip = this.chip?this.chip:[];
       this.chip.push(this.val);
       this.val = '';
       this.getChips.emit(this.chip);

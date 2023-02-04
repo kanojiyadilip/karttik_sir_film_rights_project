@@ -1,49 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { ServicesService } from '../services.service'
 import swal from 'sweetalert2';
-
-interface Country {
-	name: string;
-	flag: string;
-	area: string;
-	population: string;
-}
-
-const COUNTRIES: Country[] = [
-  {
-		name: 'Harish GALA',
-		flag: 'f/f3/Flag_of_Russia.svg',
-		area: '01/01/2016',
-		population: 'India',
-	},
-	{
-		name: 'Ketan Chheda',
-		flag: 'f/f3/Flag_of_Russia.svg',
-		area: '12/09/2015',
-		population: 'India',
-	},
-	{
-		name: 'Ashok Shah',
-		flag: 'c/cf/Flag_of_Canada.svg',
-		area: '01/05/2013',
-		population: 'India',
-	},
-	{
-		name: 'Manoj Deshai',
-	
-    flag: 'a/a4/Flag_of_the_United_States.svg',
-		area: '01/02/2013',
-		population: 'India',
-	},
-	{
-		name: 'Harshad Patel',
-		flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-		area: '07/12/2012',
-	  population: 'India',
-	},
-];
 
 
 @Component({
@@ -54,10 +14,60 @@ const COUNTRIES: Country[] = [
 export class FilmDetailComponent implements OnInit {
 
   active = 1;
+  createNew: Number = 1;
+  filmId: any;
+  filmRightData: any;
+  loaded: boolean = false;
+  filmData: any;
+  constructor(private service: ServicesService, private route: ActivatedRoute, private router: Router, private datePipe: DatePipe) { 
 
-  countries = COUNTRIES;
+    this.createNew = Number(this.route.snapshot.queryParamMap.get('createNew'));
+    console.log("==createNew==>",this.createNew);
 
-  constructor(private service: ServicesService, private route: ActivatedRoute, private router: Router) { }
+    this.filmId = this.route.snapshot.queryParams['filmid'];
+    console.log("=====uId=====>", this.filmId);
+    if(this.filmId){
+      
+      this.service.getFilmRightList({filmId: this.filmId}).subscribe((res:any)=>{
+        console.log("===getFilmRightList===>",res);
+        this.filmData = res.data.film || {};
+        this.filmRightData = res.data.filmRight || [];
+
+        // this.selectedItems = [
+        //   {item_id: 2, item_text: 'English'},
+        //   { item_id: 4, item_text: 'Gujrati' },
+        //   { item_id: 5, item_text: 'Telgu' }
+        // ];
+        if(Object.getOwnPropertyNames(this.filmData).length){
+          this.filmName = this.filmData.nameOfFilm;
+          this.language = this.filmData.language.map((e:any)=>this.selectedItems.find((item:any)=>item.item_id == e));
+          this.selectedItems = this.language;
+          console.log("==language==>", this.language)
+          this.version = this.filmData.version;
+          this.yearOfRelease = this.datePipe.transform(this.filmData.yearOfRelease,'yyyy-MM-dd'); //this.filmData.yearOfRelease;
+          this.director = this.filmData.director;
+          this.censorGrade = this.filmData.censerGrade;
+          this.proBanner = this.filmData.proBanner;
+          this.producer = this.filmData.producer;
+          this.starCast = this.filmData.starCast;
+          this.mDirector = this.filmData.mDirector;
+        }
+        
+        if(this.filmRightData.length){
+          for(var i=0; i<this.formArrayData.length; i++){
+            this.formArrayData[i].data = this.filmRightData.filter((e:any)=>e.category == this.formArrayData[i].id)
+          }
+          this.loaded = true;
+        }
+        else{
+          this.loaded = true;
+        }
+        console.log("===this.formArrayData===>",this.formArrayData);
+
+      });
+
+    }
+  }
 
   dropdownList:any = [];
   selectedItems:any = [];
@@ -73,7 +83,7 @@ export class FilmDetailComponent implements OnInit {
 
   // dilip
 
-  versionList: any = [{id:1, type: 'Color'}, {id:2, type: 'Blackend White'}]
+  versionList: any = [{id:"1", type: 'Color'}, {id:"2", type: 'Blackend White'}]
   censorGradeList: any = [{id:1, grade: 'A'}, {id:2, grade: 'U'}, {id:3, grade: 'VU'}, {id:4, grade: 'VUA'}, {id:5, grade: 'UA'}]
 
   filmName: any;
@@ -187,12 +197,11 @@ export class FilmDetailComponent implements OnInit {
       mDirector: ['James Horner'],
       censorGrade: 'A'
     }
-    this.fillData(data);
+    // this.fillData(data);
 
     this.userid = this.route.snapshot.queryParams['userid'];
     console.log("==========>", this.userid);
   }
-
 
 
   formArrayData = [
@@ -205,7 +214,8 @@ export class FilmDetailComponent implements OnInit {
         { item_id: 3, item_text: 'Satellite PPV' },
         { item_id: 4, item_text: 'Direct to Home (DTM)' },
         { item_id: 5, item_text: 'Syndication Rights' },
-      ]
+      ],
+      data: []
     },
     {
       id: 2,
@@ -216,7 +226,8 @@ export class FilmDetailComponent implements OnInit {
         { item_id: 3, item_text: 'FVOD' },
         { item_id: 4, item_text: 'SVOD' },
         { item_id: 5, item_text: 'TVOD' },
-      ]
+      ],
+      data: []
     },
     {
       id: 3,
@@ -227,7 +238,8 @@ export class FilmDetailComponent implements OnInit {
         { item_id: 3, item_text: 'IPTV (Internet Protocol Television Rights)' },
         { item_id: 4, item_text: 'Web and Internet rights' },
         { item_id: 5, item_text: 'Mobile / Digital Television' },
-      ]
+      ],
+      data: []
     },
     {
       id: 4,
@@ -236,7 +248,8 @@ export class FilmDetailComponent implements OnInit {
         { item_id: 1, item_text: 'Free Cable TV' },
         { item_id: 2, item_text: 'Cable VOD' },
         { item_id: 3, item_text: 'Pay Cable TV Rights' }
-      ]
+      ],
+      data: []
     },
     {
       id: 5,
@@ -244,7 +257,8 @@ export class FilmDetailComponent implements OnInit {
       dropdownList: [
         { item_id: 1, item_text: 'Free Terrestrial TV' },
         { item_id: 2, item_text: 'Terrestrial TV Overseas' }
-      ]
+      ],
+      data: []
     },
     {
       id: 6,
@@ -261,7 +275,8 @@ export class FilmDetailComponent implements OnInit {
         { item_id: 6, item_text: 'Prequel Rights' },
         { item_id: 7, item_text: 'Spin Off Rights' },
         { item_id: 8, item_text: 'Airborne' },
-      ]
+      ],
+      data: []
     },
     // {
     //   title: 'Clipping (Audio & Video)',
@@ -374,6 +389,7 @@ export class FilmDetailComponent implements OnInit {
     let langId = this.selectedItems.map((item:any)=>item.item_id)
 
     let val = {
+      film_id: this.filmId,
       assign_id: this.userid,
       nameOfFilm: this.filmName,
       language: langId,
@@ -385,7 +401,7 @@ export class FilmDetailComponent implements OnInit {
       producer: this.producer,
       starCast: this.starCast,
       mDirector: this.mDirector,
-      fRights: this.fRights
+      // fRights: this.fRights
     }
 
     this.service.createFilm(val).subscribe((res:any)=>{

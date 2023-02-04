@@ -7,6 +7,10 @@ router.post('/create_assign', createAssign);
 router.get('/get_assign', getAssign);
 
 router.post('/create_film', createFilm);
+router.post('/get_Film_list', getFilmList);
+router.post('/get_film_right_list', getFilmRightList);
+router.post('/create_film_right', createFilmRight);
+
 router.post('/search_cl', searchClient);
 
 
@@ -96,6 +100,88 @@ function searchClient(req,res){
     else {
 
         filmService.searchClient(req.body, function (result) {
+            // if error is there
+            if (result instanceof Error) {
+                res.status(200).json(result)
+            }
+            // if there is no error
+            else {
+                res.status(200).json(result)
+            }
+        })
+    }
+
+        
+}
+
+
+function getFilmList(req,res){
+    // console.log("-<req>-", req);
+   console.log("-<>-", req.body);
+    if (req.body.assignId == undefined) {
+
+        res.status(200).json({
+            'code': 405,
+            'msg': "parameters missing"
+        })
+    }
+    else {
+
+        filmService.getFilmList(req.body, function (result) {
+            // if error is there
+            if (result instanceof Error) {
+                res.status(200).json(result)
+            }
+            // if there is no error
+            else {
+                res.status(200).json(result)
+            }
+        })
+    }
+
+        
+}
+
+function getFilmRightList(req,res){
+    // console.log("-<req>-", req);
+   console.log("-<>-", req.body);
+    if (req.body.filmId == undefined) {
+
+        res.status(200).json({
+            'code': 405,
+            'msg': "parameters missing"
+        })
+    }
+    else {
+
+        filmService.getFilmRightList(req.body, function (result) {
+            // if error is there
+            if (result instanceof Error) {
+                res.status(200).json(result)
+            }
+            // if there is no error
+            else {
+                res.status(200).json(result)
+            }
+        })
+    }
+
+        
+}
+
+function createFilmRight(req,res){
+    // console.log("-<req>-", req);
+   console.log("-<>-", req.body);
+    if (req.body.film_id == undefined) {
+
+        res.status(200).json({
+            'code': 405,
+            'msg': "parameters missing"
+        })
+    }
+    else {
+
+        filmService.createFilmRight(req.body, function (result) {
             // if error is there
             if (result instanceof Error) {
                 res.status(200).json(result)

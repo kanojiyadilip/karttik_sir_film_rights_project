@@ -94,11 +94,11 @@
 
             </div>
             <div class="col-md-4">
-                <label>Version</label>
-                <select class="form-select" style="height: 34px" [(ngModel)]="version" name="sbr" >
-                    <option *ngFor="let item of versionList">{{item.type}}</option>
+                <label>Version {{version}}</label>
+                <select class="form-select" style="height: 34px" [(ngModel)]="version" name="version" >
+                    <option *ngFor="let item of versionList" [value]="item.type">{{item.type}}</option>
                 </select>
-                <!-- <input class="form-control" type="text" placeholder="Territories" name="en"/> -->
+
             </div>
         </div>  
 
@@ -151,6 +151,11 @@
                     <option *ngFor="let item of censorGradeList">{{item.grade}}</option>
                 </select>
             </div>
+            <div class="col-md-4">
+                <button class="btn btn-success" style="display:none" ></button>
+                <button type="submit" class="btn btn-success" style="width: 85px; margin: 25px" (click)="submit()">save</button>
+
+            </div>
             <!-- <div class="col-md-4">
                 <label>Expiry</label>
                 <input class="form-control" type="text" placeholder="Expiry"/>
@@ -165,14 +170,18 @@
         <!-- <br>
         <br>        -->
 
+        <div *ngIf="loaded">
+
         <ng-container *ngFor="let item of formArrayData">
             <!-- <p>{{item.title}}</p> -->
-            <app-form-array (getFormArrayData)="arrayData($event)" [title]="{title: item.title, id: item.id}" [dropdownList]="item.dropdownList"></app-form-array>
+            <!-- <P>{{item.data | json}}</P> -->
+            <app-form-array (getFormArrayData)="arrayData($event)" [topData]="{title: item.title, id: item.id, filmId: filmId}" [dropdownList]="item.dropdownList" [data]="item.data"></app-form-array>
         </ng-container>
+        </div>
         
 
         <br><br>
         
-        <button type="submit" class="btn btn-success" style="width: 100%;" (click)="submit()">click here to Save this all data</button>
+        <!-- <button type="submit" class="btn btn-success" style="width: 100%;" (click)="submit()">click here to Save this all data</button> -->
     </form>
 </div>

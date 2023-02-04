@@ -177,18 +177,18 @@
               <th scope="row">{{ i + 1 }}</th>
         <td>
           <div style="display: flex; gap: 15px;">
-          <i class="fa fa-pencil" aria-hidden="true" [routerLink]="['/film-detail']"></i>
+          <i class="fa fa-pencil" aria-hidden="true" [routerLink]="['/film-detail']" [queryParams]="{ createNew : 0, filmid: country._id }"></i>
           <i class="fa fa-eye" aria-hidden="true"></i>
           </div>
         </td>
               <td>	
-                  {{ country.name }}
+                  {{ country.nameOfFilm }}
               </td>
               <td>
                 {{ country.director }}
             </td>
-              <td>{{ country.yearOfRelease }}</td>
-              <td>{{ country.censorGrade }}</td>
+              <td>{{ country.yearOfRelease | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ country.censerGrade }}</td>
           </tr>
       </tbody>
   </table>
