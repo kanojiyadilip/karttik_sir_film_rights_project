@@ -5,7 +5,7 @@ var filmSchema = require('./films.model').filmSchema;
 var filmRightSchema = require('./films.model').filmRightSchema;
 var fs = require('fs');
 var mongoose = require('mongoose');
-
+var csvtojson = require('csvtojson');
 
 module.exports = {
     getAssign,
@@ -14,7 +14,8 @@ module.exports = {
     getFilmList,
     getFilmRightList,
     searchClient,
-    createFilmRight
+    createFilmRight,
+    createUser
 }
 
 function createAssign(data, callback){
@@ -334,11 +335,14 @@ function createFilmRight(data, callback){
 
 function searchClient(data, callback){
 
-    let dumData = [{name: "Zee"}, {name: "Sub"}, {name: "Star"}]
+    let userList = require('../../public/uploads/users.json');
+    // console.log("----userList----->", userList);
 
-    console.log("-<tourData>-", data);
+    // let dumData = [{name: "Zee"}, {name: "Sub"}, {name: "Star"}]
 
-    let dataList = dumData.filter(e=>e.name.toLowerCase().substring(0, data.keys.length)==data.keys.toLowerCase());
+    // console.log("-<tourData>-", data);
+
+    let dataList = userList.filter(e=>e.name.toLowerCase().substring(0, data.keys.length)==data.keys.toLowerCase());
     // assignSchema.find({},(err, doc)=>{
     //     if(doc){
             callback({
@@ -358,3 +362,40 @@ function searchClient(data, callback){
     // })
     
 }
+
+
+var fs = require('fs');
+
+function createUser(req, callback){
+
+    console.log("-<tourData>-", req);
+
+    var obj = req.files; 
+    console.log("===obj====>",obj);
+    //   req.on(data=>{
+    //     console.log("==data===>", data);  
+    //     var csvData = req.data.toString('utf8');
+    //     return csvtojson().fromString(csvData).then(json =>{
+    //       console.log("==json=1==>", json);
+    //     })
+    //   })
+    console.log("==obj.usersListCsv.data===>", obj.usersListCsv.data);
+        var csvData = obj.usersListCsv.data.toString('utf8');
+        console.log("==csvData===>", csvData);
+        return csvtojson().fromString(csvData).then(json =>{
+        console.log("==json===>", typeof json);
+
+        var stream = fs.createWriteStream("public/uploads/users.json");
+        stream.once('open', (fd)=>{
+            stream.write(JSON.stringify(json));
+            stream.end();
+            callback({
+                code: 200,
+                msg: 'data saved Successfully',
+                data: json
+            })
+        })
+
+    })
+}
+

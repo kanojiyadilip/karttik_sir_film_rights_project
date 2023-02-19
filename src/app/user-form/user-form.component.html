@@ -8,24 +8,11 @@
     <form #frm="ngForm" (ngSubmit)="submit(frm)">
         <div class="row">
             <div class="col-md-3">
-                <label>Name of the assignor</label>
-                
-                <input class="form-control" type="text" [(ngModel)]="nameOfAssignor" (keyup)="search($event)" 
-                placeholder="Name of the assignor" name="nameOfAssignor" list="nameOfAssignor"/>
-                <datalist id="nameOfAssignor">
-                    <option *ngFor="let item of clientList">{{item.name}} </option>
-               </datalist>
-            </div>
-            <div class="col-md-3">
-                <label>Date of assignor</label>
+                <label>Agreement Date</label>
                 <!-- <ngb-datepicker id='gfg' [(ngModel)]="doa"></ngb-datepicker> -->
                 <!-- <ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next"></ngb-datepicker> -->
                 <input type="date" placeholder="Start date" [(ngModel)]="dateOfAssignor" class="form-control" name="dateOfAssignor" />
 
-            </div>
-            <div class="col-md-3">
-                <label>Name of assignee</label>
-                <input class="form-control" type="text" [(ngModel)]="nameOfAssignee" placeholder="Name of assignee" name="nameOfAssignee"/>
             </div>
             <div class="col-md-3">
                 <label>Account</label>
@@ -33,6 +20,46 @@
                     <option *ngFor="let item of account" [value]="item.id">{{item.text}}</option>
                 </select>
             </div> 
+            <div class="col-md-3">
+                <label>Name of the Assignor</label>
+                
+                <!-- <input class="form-control" type="text" [(ngModel)]="nameOfAssignor" (keyup)="search($event)" 
+                placeholder="Name of the assignor" name="nameOfAssignor" list="nameOfAssignor"/>
+                <datalist id="nameOfAssignor">
+                    <option *ngFor="let item of clientList" (click)="selectVal($event)">{{item.name}} </option>
+               </datalist> -->
+
+               <div class="ssel">
+               <ng-multiselect-dropdown
+                    [placeholder]="'Name of the Assignor'"
+                    [settings]="dropdownSettings"
+                    [data]="multiSelectDrop"
+                    [(ngModel)]="selectedItems"
+                    (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)"
+                    (onFilterChange)="onFilterChange($event)"
+                    [ngModelOptions]="{standalone: true}"
+                >
+                </ng-multiselect-dropdown> 
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <label>Name of Assignee</label>
+                <!-- <input class="form-control" type="text" [(ngModel)]="nameOfAssignee" placeholder="Name of assignee" name="nameOfAssignee"/> -->
+                <div class="ssel">
+                    <ng-multiselect-dropdown
+                         [placeholder]="'Name of Assignee'"
+                         [settings]="dropdownSettings2"
+                         [data]="multiSelectDrop"
+                         [(ngModel)]="selectedItems1"
+                         (onSelect)="onItemSelect2($event)"
+                         (onSelectAll)="onSelectAll2($event)"
+                         [ngModelOptions]="{standalone: true}"
+                     >
+                    </ng-multiselect-dropdown> 
+                </div>
+            </div>
         </div>  
         
         <button type="submit" class="btn btn-success" style="float: right; margin-top: 10px;"> Submit</button>

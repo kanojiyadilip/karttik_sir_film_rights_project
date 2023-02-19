@@ -19,10 +19,18 @@ export class UserFormComponent implements OnInit {
   countries: any =[];
   createNew: Number = 1;
   modelChanged: Subject<string> = new Subject<string>();
+  multiSelectDrop: any = [{item_id:"", item_text: ""}];
 
 
   constructor(private route: ActivatedRoute, private router: Router, private service: ServicesService) { 
     this.createNew = Number(this.route.snapshot.queryParamMap.get('createNew'));
+    // this.multiSelectDrop = [
+    //   { item_id: 1, item_text: 'Hindi' },
+    //   { item_id: 2, item_text: 'English' },
+    //   { item_id: 3, item_text: 'Marathi' },
+    //   { item_id: 4, item_text: 'Gujrati' },
+    //   { item_id: 5, item_text: 'Telgu' }
+    // ];
     console.log("==createNew==>",this.createNew);
   }
 
@@ -54,12 +62,8 @@ export class UserFormComponent implements OnInit {
   clientList: any; //= [{"name": "Zee TV"}];
 
   ngOnInit(): void {
-    
+    // this.dropdownList = this.clientList.map((item:any)=>({item_id: "", item_text: item.name}));
     this.dropdownList = [
-      { item_id: 1, item_text: 'Satellite Broadcasting Rights - Free & Pay / Subsciption TV' },
-      { item_id: 2, item_text: 'Satellite VOD' },
-      { item_id: 3, item_text: 'Satellite PPV' },
-      { item_id: 4, item_text: 'Direct to Home (DTM)' },
       // { item_id: 5, item_text: 'New Delhi' }
     ];
     // this.selectedItems = [
@@ -67,12 +71,12 @@ export class UserFormComponent implements OnInit {
     //   { item_id: 4, item_text: 'Navsari' }
     // ];
     this.dropdownSettings = {
-      singleSelection: false,
+      singleSelection: true,
       idField: 'item_id',
       textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
+      // selectAllText: 'Select All',
+      // unSelectAllText: 'UnSelect All',
+      // itemsShowLimit: 3,
       allowSearchFilter: true
     }; 
     
@@ -147,6 +151,19 @@ export class UserFormComponent implements OnInit {
     console.log(items);
   }
 
+  onItemSelect2(item: any) {
+    console.log(item);
+  }
+  onSelectAll2(items: any) {
+    console.log(items);
+  }
+
+  onFilterChange(event: any){
+    console.log("event", event);
+    this.search(event);
+  
+  }
+
   doa: any = {years: 2022, month: 12, day: 10}
 
   sbr: any = [
@@ -184,11 +201,11 @@ export class UserFormComponent implements OnInit {
   }
 
   submit(data:any){
-    console.log("<====data====>", data);
-    console.log("<====data====>", data.value);
+    console.log(this.selectedItems,this.selectedItems,"<====data====>", data);
+    console.log(this.selectedItems1,this.selectedItems,"<====data====>", data.value);
     let val = {
-      nameOfAssignor: data.value.nameOfAssignor,
-      nameOfAssignee: data.value.nameOfAssignee,
+      nameOfAssignor: this.selectedItems[0].item_text,// data.value.nameOfAssignor,
+      nameOfAssignee: this.selectedItems1[0].item_text,// data.value.nameOfAssignee,
       dateOfAgreement: data.value.dateOfAssignor, 
       accountType: data.value.accountVal
     }
@@ -219,11 +236,18 @@ export class UserFormComponent implements OnInit {
   }
 
   search(e:any){
-    console.log("==Search==>",this.nameOfAssignor)
-    this.service.searchClientName({keys: this.nameOfAssignor}).subscribe((res:any)=>{
+    console.log("==Search==>",e)
+    this.service.searchClientName({keys: e}).subscribe((res:any)=>{
       console.log("===searchClientName===>",res);
       this.clientList = res.data;
+      this.dropdownList = this.clientList.map((item:any, i: any)=>({item_id: i, item_text: item.name}));
+      this.multiSelectDrop = this.dropdownList;
+
     });
+  }
+
+  selectVal(event: any){
+    console.log("=event=>", event);
   }
 
   

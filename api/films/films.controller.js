@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+//multer
+var multer  = require('multer');
+var upload = multer();
 
 var filmService = require('./films.service');
 
@@ -10,7 +13,7 @@ router.post('/create_film', createFilm);
 router.post('/get_Film_list', getFilmList);
 router.post('/get_film_right_list', getFilmRightList);
 router.post('/create_film_right', createFilmRight);
-
+router.post('/create_user', createUser);
 router.post('/search_cl', searchClient);
 
 
@@ -192,6 +195,30 @@ function createFilmRight(req,res){
             }
         })
     }
+}
 
-        
+
+function createUser(req,res){
+    // console.log("-<req>-", req);
+   console.log("-<req f. files>-", req.files);
+    if (req.files == undefined) {
+
+        res.status(200).json({
+            'code': 405,
+            'msg': "parameters missing"
+        })
+    }
+    else {
+
+        filmService.createUser(req, function (result) {
+            // if error is there
+            if (result instanceof Error) {
+                res.status(200).json(result)
+            }
+            // if there is no error
+            else {
+                res.status(200).json(result)
+            }
+        })
+    }
 }

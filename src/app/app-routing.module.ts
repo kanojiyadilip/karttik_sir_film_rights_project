@@ -4,6 +4,7 @@ import { UserFormComponent } from './user-form/user-form.component'
 import { AppComponent } from './app.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { FilmDetailComponent } from './film-detail/film-detail.component';
+import { DataCreationComponent } from './admin/data-creation/data-creation.component';
 const routes: Routes = [
   {
     path: '',
@@ -22,6 +23,11 @@ const routes: Routes = [
     pathMatch: 'full',
     component: FilmDetailComponent,
     // pathMatch: 'full',
+  },
+  {
+    path: 'creation',
+    pathMatch: 'full',
+    component: DataCreationComponent
   }
 ]  
 

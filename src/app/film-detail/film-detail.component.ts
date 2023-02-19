@@ -16,7 +16,7 @@ export class FilmDetailComponent implements OnInit {
   active = 1;
   createNew: Number = 1;
   filmId: any;
-  filmRightData: any;
+  filmRightData: any; 
   loaded: boolean = false;
   filmData: any;
   constructor(private service: ServicesService, private route: ActivatedRoute, private router: Router, private datePipe: DatePipe) { 
@@ -178,7 +178,7 @@ export class FilmDetailComponent implements OnInit {
     },500)
     setTimeout(()=>{
       this.ref = true;
-    },1000)
+  },1000)
 
 
     let data = {
@@ -208,11 +208,12 @@ export class FilmDetailComponent implements OnInit {
     {
       id: 1,
       title: 'SATELLITE BROADCASTING RIGHTS',
+      dropdownName: 'SATELLITE',
       dropdownList: [
         { item_id: 1, item_text: 'Satellite Broadcasting Rights - Free & Pay / Subsciption TV' },
         { item_id: 2, item_text: 'Satellite VOD' },
         { item_id: 3, item_text: 'Satellite PPV' },
-        { item_id: 4, item_text: 'Direct to Home (DTM)' },
+        { item_id: 4, item_text: 'Direct to Home (DTH)' },
         { item_id: 5, item_text: 'Syndication Rights' },
       ],
       data: []
@@ -220,6 +221,7 @@ export class FilmDetailComponent implements OnInit {
     {
       id: 2,
       title: 'VIDEO ON DEMAND THROUGH CABLE, SATELLITE OR INTERNET',
+      dropdownName: 'VOD RIGHTS',
       dropdownList: [
         { item_id: 1, item_text: 'nVOD' },
         { item_id: 2, item_text: 'AVOD' },
@@ -232,6 +234,7 @@ export class FilmDetailComponent implements OnInit {
     {
       id: 3,
       title: 'INTERNET / NEW MEDIA RIGHTS',
+      dropdownName: 'INTERNET',
       dropdownList: [
         { item_id: 1, item_text: 'YouTube / Daily Motion Rights' },
         { item_id: 2, item_text: 'Broadband Rights' },
@@ -244,6 +247,7 @@ export class FilmDetailComponent implements OnInit {
     {
       id: 4,
       title: 'CABLE TELEVISION RIGHTS',
+      dropdownName: 'CABLE TV',
       dropdownList: [
         { item_id: 1, item_text: 'Free Cable TV' },
         { item_id: 2, item_text: 'Cable VOD' },
@@ -254,6 +258,7 @@ export class FilmDetailComponent implements OnInit {
     {
       id: 5,
       title: 'TERRESTRIAL TELEVISION',
+      dropdownName: 'TERRESTRAIL',
       dropdownList: [
         { item_id: 1, item_text: 'Free Terrestrial TV' },
         { item_id: 2, item_text: 'Terrestrial TV Overseas' }
@@ -263,6 +268,7 @@ export class FilmDetailComponent implements OnInit {
     {
       id: 6,
       title: 'Anciliary / Other RIGHTS',
+      dropdownName: 'OTHER RIGHTS',
       dropdownList: [
         { item_id: 1, item_text: 'Music Rights' },
         { item_id: 2, item_text: 'Audio / Visuals rights' },

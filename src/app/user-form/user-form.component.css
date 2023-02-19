@@ -13,3 +13,39 @@ label{
 .hights{
     height: 100%;
 }
+
+::ng-deep .ssel .multiselect-item-checkbox[_ngcontent-eqy-c49] input[type=checkbox][_ngcontent-eqy-c49] + div[_ngcontent-eqy-c49]:before {
+    box-sizing: content-box;
+    content: "";
+    color: #FFF;
+    position: fixed !important;
+    /* top: 50%; */
+    /* left: 0; */
+    /* width: 14px; */
+    height: 14px;
+    /* margin-top: -9px; */
+    /* border: 2px solid #337ab7; */
+    text-align: center;
+    transition: .4s;
+}
+
+::ng-deep .multiselect-dropdown .dropdown-list .item2 .multiselect-item-checkbox div{
+    position: unset !important;
+    padding-left: 0 !important;
+    
+}
+
+::ng-deep .ssel ng-multiselect-dropdown .multiselect-dropdown .dropdown-list ul .multiselect-item-checkbox input[type=checkbox] + div:before{
+    width: 0px !important;
+    height: 0px !important;
+    border: unset !important
+}
+
+::ng-deep .ssel ng-multiselect-dropdown .multiselect-dropdown div .dropdown-btn .selected-item-container .selected-item{
+    border: unset !important;
+    background: none !important;
+    color: #000 !important;
+}
+::ng-deep .ssel ng-multiselect-dropdown .multiselect-dropdown div .dropdown-btn{
+    background: white !important;
+}

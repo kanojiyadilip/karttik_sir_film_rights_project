@@ -180,11 +180,11 @@
                     <th scope="col">Action</th>
                     <th scope="cal">Category</th>
                     <th scope="col">Nature of Rights</th>
-                    <th scope="col">Delivery/TCQC</th>
-                    <th scope="col">language</th>
+                    <!-- <th scope="col">Delivery/TCQC</th> -->
+                    <!-- <th scope="col">language</th> -->
                     <th scope="col">Commencement</th>
                     <th scope="col">Expiry</th>
-                    <th scope="col">Exl. language</th>
+                    <!-- <th scope="col">Exl. language</th> -->
                     <th scope="col">Territories</th>
                     <th scope="col">Excl. Territories</th>
                     <th scope="col">No. of Runs</th>
@@ -201,11 +201,11 @@
               </td>
                     <td>{{ item.subCategoryVal }}</td>
                     <td>{{ item.natureOfRight }}</td>
-                    <td>{{ item.deliveryTcqc | date: 'dd/MM/yyyy' }}</td>
-                    <td>{{ item.language | json }}</td>
+                    <!-- <td>{{ item.deliveryTcqc | date: 'dd/MM/yyyy' }}</td> -->
+                    <!-- <td>{{ item.language | json }}</td> -->
                     <td>{{ item.commencement | date: 'dd/MM/yyyy' }}</td>
                     <td>{{ item.expiry | date: 'dd/MM/yyyy' }}</td>
-                    <td>{{ item.exlLanguage | json }}</td>
+                    <!-- <td>{{ item.exlLanguage | json }}</td> -->
                     <td>{{ item.territories }}</td>
                     <td>{{ item.exclTerritories }}</td>
                     <td>{{ item.noOfRuns }}</td>
@@ -234,7 +234,7 @@
 
                 <div class="row" style="margin: 20px 0px;">
                     <div class="col-md-4">
-                        <label class="lbm">SATELLITE RIGHTS</label>
+                        <label class="lbm">{{topData.dropdownName}}</label>
                         <select class="form-select hights" [(ngModel)]="rowObj.sbr" name="sbr" (change)="setSelectedStatus($event)">
                             <option *ngFor="let item of dropdownList" [value]="item.item_id">{{item.item_text}}</option>
                         </select>

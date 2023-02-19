@@ -78,7 +78,7 @@
                 <input class="form-control" type="text" placeholder="Film Name" [(ngModel)]="filmName" name="nos"/>
             </div>
             <div class="col-md-4">
-                <label>Language</label>
+                <label>Language Test</label>
                 <!-- <input type="text" placeholder="Start date" class="form-control" [(ngModel)]="language" name="st"/> -->
 
                 <ng-multiselect-dropdown
@@ -175,7 +175,7 @@
         <ng-container *ngFor="let item of formArrayData">
             <!-- <p>{{item.title}}</p> -->
             <!-- <P>{{item.data | json}}</P> -->
-            <app-form-array (getFormArrayData)="arrayData($event)" [topData]="{title: item.title, id: item.id, filmId: filmId}" [dropdownList]="item.dropdownList" [data]="item.data"></app-form-array>
+            <app-form-array (getFormArrayData)="arrayData($event)" [topData]="{title: item.title, id: item.id, dropdownName: item.dropdownName, filmId: filmId}" [dropdownList]="item.dropdownList" [data]="item.data"></app-form-array>
         </ng-container>
         </div>
         

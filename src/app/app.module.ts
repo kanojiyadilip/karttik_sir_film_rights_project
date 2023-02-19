@@ -22,6 +22,7 @@ import { FilmDetailComponent } from './film-detail/film-detail.component';
 import { FormArrayComponent } from './form-array/form-array.component';
 import { AddChipComponent } from './add-chip/add-chip.component';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { DataCreationComponent } from './admin/data-creation/data-creation.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
     UserListComponent,
     FilmDetailComponent,
     FormArrayComponent,
-    AddChipComponent
+    AddChipComponent,
+    DataCreationComponent
   ],
   imports: [
     BrowserModule,
