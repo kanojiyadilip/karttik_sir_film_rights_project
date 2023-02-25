@@ -196,7 +196,7 @@
               <td>
                 <div style="display: flex; gap: 15px;">
                 <i class="fa fa-pencil" style="cursor: pointer;" aria-hidden="true" (click)="openPopup(item)"></i>
-                <i class="fa fa-eye" aria-hidden="true"></i>
+                <i class="fa fa-eye" aria-hidden="true" (click)="detailPopup(item)"></i>
                 </div>
               </td>
                     <td>{{ item.subCategoryVal }}</td>
@@ -315,3 +315,98 @@
 
 
 
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':inDetailVisible}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Details</h4>
+                <button type="button" class="btn btn-danger" (click)="inDetailVisible='none'"> Close </button>
+                <!-- <p (click)="inDetailVisible='none'">X</p> -->
+            </div>
+            <div class="modal-body">
+
+                <div class="row" style="margin: 5px 0px;">
+                    <div class="col-md-3">
+                        <label class="lbm">Category</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p style="margin-top: 10px">{{inDetail.subCategoryVal}}</p>
+                    </div>
+                </div>
+                <div class="row" style="margin: 5px 0px;">
+                    <div class="col-md-3">
+                        <label class="lbm">Nature of Rights</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p style="margin-top: 10px">{{inDetail.natureOfRight}}</p>
+                    </div>
+                </div>
+                <div class="row" style="margin: 5px 0px;">
+                    <div class="col-md-3">
+                        <label class="lbm">Commencement</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p style="margin-top: 10px">{{inDetail.commencement | date: 'dd/MM/yyyy'}}</p>
+                    </div>
+                </div>
+                <div class="row" style="margin: 5px 0px;">
+                    <div class="col-md-3">
+                        <label class="lbm">Expiry</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p style="margin-top: 10px">{{inDetail.expiry | date: 'dd/MM/yyyy'}}</p>
+                    </div>
+                </div>
+                <div class="row" style="margin: 5px 0px;">
+                    <div class="col-md-3">
+                        <label class="lbm">Territories</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p style="margin-top: 10px">{{inDetail.territories | json}}</p>
+                    </div>
+                </div>
+                <div class="row" style="margin: 5px 0px;">
+                    <div class="col-md-3">
+                        <label class="lbm">Excl. Territories</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p style="margin-top: 10px">{{inDetail.exclTerritories}}</p>
+                    </div>
+                </div>
+                <div class="row" style="margin: 5px 0px;">
+                    <div class="col-md-3">
+                        <label class="lbm">No. of Runs</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p style="margin-top: 10px">{{inDetail.noOfRuns}}</p>
+                    </div>
+                </div>
+                <div class="row" style="margin: 5px 0px;">
+                    <div class="col-md-3">
+                        <label class="lbm">Exl. language</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p style="margin-top: 10px">{{inDetail.exlLanguage}}</p>
+                    </div>
+                </div>
+                <div class="row" style="margin: 5px 0px;">
+                    <div class="col-md-3">
+                        <label class="lbm">Language</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p style="margin-top: 10px">{{inDetail.language}}</p>
+                    </div>
+                </div>
+                <div class="row" style="margin: 5px 0px;">
+                    <div class="col-md-3">
+                        <label class="lbm">Delivery/TCQC</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p style="margin-top: 10px">{{inDetail.deliveryTcqc | date: 'dd/MM/yyyy'}}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>                

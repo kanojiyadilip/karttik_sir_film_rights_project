@@ -15,6 +15,7 @@ router.post('/get_film_right_list', getFilmRightList);
 router.post('/create_film_right', createFilmRight);
 router.post('/create_user', createUser);
 router.post('/search_cl', searchClient);
+router.get('/basic_detail', basicDetail);
 
 
 module.exports = router;
@@ -221,4 +222,18 @@ function createUser(req,res){
             }
         })
     }
+}
+
+function basicDetail(req,res){
+
+    filmService.basicDetail(req, function (result) {
+        // if error is there
+        if (result instanceof Error) {
+            res.status(200).json(result)
+        }
+        // if there is no error
+        else {
+            res.status(200).json(result)
+        }
+    })
 }

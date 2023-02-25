@@ -51,10 +51,11 @@
                     <ng-multiselect-dropdown
                          [placeholder]="'Name of Assignee'"
                          [settings]="dropdownSettings2"
-                         [data]="multiSelectDrop"
+                         [data]="multiSelectDrop2"
                          [(ngModel)]="selectedItems1"
                          (onSelect)="onItemSelect2($event)"
                          (onSelectAll)="onSelectAll2($event)"
+                         (onFilterChange)="onFilterChange2($event)"
                          [ngModelOptions]="{standalone: true}"
                      >
                     </ng-multiselect-dropdown> 

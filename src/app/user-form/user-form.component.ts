@@ -20,6 +20,7 @@ export class UserFormComponent implements OnInit {
   createNew: Number = 1;
   modelChanged: Subject<string> = new Subject<string>();
   multiSelectDrop: any = [{item_id:"", item_text: ""}];
+  multiSelectDrop2: any = [{item_id:"", item_text: ""}];
 
 
   constructor(private route: ActivatedRoute, private router: Router, private service: ServicesService) { 
@@ -155,12 +156,17 @@ export class UserFormComponent implements OnInit {
     console.log(item);
   }
   onSelectAll2(items: any) {
-    console.log(items);
+    console.log("===>",items);
+  }
+
+  onFilterChange2(event: any) {
+    console.log("===>",event);
+    this.search(event, "nee");
   }
 
   onFilterChange(event: any){
     console.log("event", event);
-    this.search(event);
+    this.search(event, "nor");
   
   }
 
@@ -235,13 +241,22 @@ export class UserFormComponent implements OnInit {
     // console.log("===v===>",res);
   }
 
-  search(e:any){
+  search(e:any, ty:any){
     console.log("==Search==>",e)
     this.service.searchClientName({keys: e}).subscribe((res:any)=>{
       console.log("===searchClientName===>",res);
       this.clientList = res.data;
       this.dropdownList = this.clientList.map((item:any, i: any)=>({item_id: i, item_text: item.name}));
-      this.multiSelectDrop = this.dropdownList;
+      if(ty=="nor"){
+        console.log("==selectedItems2==>", this.selectedItems2)
+        this.multiSelectDrop = this.dropdownList;
+      }
+      else{
+        console.log("==selectedItems==>", this.selectedItems)
+        this.dropdownList = (this.selectedItems.length>0)?this.dropdownList.filter((item:any)=>item.item_text!=this.selectedItems[0].item_text):this.dropdownList;
+        this.multiSelectDrop2 = this.dropdownList;
+      }
+      
 
     });
   }

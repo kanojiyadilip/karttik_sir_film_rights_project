@@ -1,67 +1,22 @@
 [
     {
-        "Code": "00",
-        "name": "None of these",
-        "Occupied_private_dwellings": "5979"
+        "id": "1",
+        "name": "zee"
     },
     {
-        "Code": "01",
-        "name": "Cooking facilities",
-        "Occupied_private_dwellings": "1512414"
+        "id": "2",
+        "name": "sony"
     },
     {
-        "Code": "02",
-        "name": "Tap water that is safe to drink",
-        "Occupied_private_dwellings": "1481133"
+        "id": "3",
+        "name": "amazone"
     },
     {
-        "Code": "03",
-        "name": "Kitchen sink",
-        "Occupied_private_dwellings": "1513830"
+        "id": "1",
+        "name": "Netflix"
     },
     {
-        "Code": "04",
-        "name": "Refrigerator",
-        "Occupied_private_dwellings": "1481430"
-    },
-    {
-        "Code": "05",
-        "name": "Bath or shower",
-        "Occupied_private_dwellings": "1514472"
-    },
-    {
-        "Code": "06",
-        "name": "Toilet",
-        "Occupied_private_dwellings": "1515042"
-    },
-    {
-        "Code": "07",
-        "name": "Electricity supply",
-        "Occupied_private_dwellings": "1503675"
-    },
-    {
-        "Code": "77",
-        "name": "Response unidentifiable",
-        "Occupied_private_dwellings": "1794"
-    },
-    {
-        "Code": "99",
-        "name": "Not stated",
-        "Occupied_private_dwellings": "132615"
-    },
-    {
-        "Code": "TotalStated",
-        "name": "Total stated",
-        "Occupied_private_dwellings": "1529901"
-    },
-    {
-        "Code": "TotalResponses",
-        "name": "Total responses",
-        "Occupied_private_dwellings": "10527978"
-    },
-    {
-        "Code": "Total",
-        "name": "Total",
-        "Occupied_private_dwellings": "1664313"
+        "id": "1",
+        "name": "Hotsar"
     }
 ]

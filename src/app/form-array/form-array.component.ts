@@ -28,11 +28,15 @@ export class FormArrayComponent implements OnInit {
 
   constructor(private service: ServicesService, private datePipe: DatePipe) { 
     console.log(this.dropdownList,"==========data==========>",this.data);
+    console.log("=====LANGUAGES======1=>", this.service.basicDetails.languages);
+    this.multiSelectDrop = this.service.basicDetails.languages.map((e:any)=>({item_id: e.id, item_text: e.lable}))
+    this.lanList = this.multiSelectDrop;
+    console.log("=====LANGUAGES======2=>", this.multiSelectDrop);
+    console.log("=====LANGUAGES======3=>", this.lanList);
   }
   
   ngOnInit(): void {
     
-    this.data = this.data.map((e:any)=>({...e, val: "dilip"}))
     this.data = this.data.map((e:any)=>({...e, subCategoryVal: this.dropdownList.find((item:any)=>item.item_id == e.subCategory).item_text }))
     // console.log(this.dropdownList.find((item:any)=>item.item_id == 1).item_text,"==========DILIP==========>",this.data);
     
@@ -43,13 +47,13 @@ export class FormArrayComponent implements OnInit {
       this.ref = true;
     },1000)
 
-    this.multiSelectDrop = [
-      { item_id: 1, item_text: 'Hindi' },
-      { item_id: 2, item_text: 'English' },
-      { item_id: 3, item_text: 'Marathi' },
-      { item_id: 4, item_text: 'Gujrati' },
-      { item_id: 5, item_text: 'Telgu' }
-    ];
+    // this.multiSelectDrop = [
+    //   { item_id: 1, item_text: 'Hindi' },
+    //   { item_id: 2, item_text: 'English' },
+    //   { item_id: 3, item_text: 'Marathi' },
+    //   { item_id: 4, item_text: 'Gujrati' },
+    //   { item_id: 5, item_text: 'Telgu' }
+    // ];
 
     // this.exlng = [
     //   { item_id: 1, item_text: 'Hindi' },
@@ -150,13 +154,7 @@ export class FormArrayComponent implements OnInit {
    
   displayStyle = "none";
 
-  lanList: any = [
-    { item_id: 1, item_text: 'Hindi' },
-    { item_id: 2, item_text: 'English' },
-    { item_id: 3, item_text: 'Marathi' },
-    { item_id: 4, item_text: 'Gujrati' },
-    { item_id: 5, item_text: 'Telgu' }
-  ];
+  lanList: any;
   
   openPopup(val:any) {
     if(val=="save"){
@@ -215,12 +213,35 @@ export class FormArrayComponent implements OnInit {
       }
       else{
         swal.fire(
-          "Something went wrong!",
+          res.msg,
           '',
           'error'
         )
       }
     });
+  }
+
+  inDetail: any = {
+    title: "Details",
+    subCategoryVal: "",
+    natureOfRight: "",
+    commencement: "",
+    expiry: "",
+    Territories: "",
+    exclTerritories: "",
+    noOfRuns: "",
+    // subCategoryVal: "",
+    // subCategoryVal: "",
+    // subCategoryVal: ""
+  };
+  inDetailVisible:any = "none";
+  detailPopup(val:any){
+    console.log("val=>", val)
+    this.inDetail = val;
+    this.inDetail.language = this.inDetail.language.map((e:any)=>this.lanList.find((item:any)=>item.item_id == e)).map((e:any)=>e.item_text);
+    this.inDetail.exlLanguage = this.inDetail.exlLanguage.map((e:any)=>this.lanList.find((item:any)=>item.item_id == e)).map((e:any)=>e.item_text);
+    console.log("this.inDetail=>", this.inDetail)
+    this.inDetailVisible = "block";
   }
 
 }

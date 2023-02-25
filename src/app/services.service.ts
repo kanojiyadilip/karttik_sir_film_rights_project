@@ -7,10 +7,13 @@ import { map } from  'rxjs/operators';
 })
 export class ServicesService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    this.basicDetail({});
+  }
 
   // baseUrl: any = 'http://43.206.104.242:3001/api/films/'; 
   baseUrl: any = 'http://localhost:3001/api/films/'; 
+  basicDetails: any;
   saveAssign(data: any) {
     // let data = {
     //   nameOfAssignor: 'Harish GALA',
@@ -49,5 +52,17 @@ export class ServicesService {
 
   createUser(data: any) {
     return this.http.post(this.baseUrl+'create_user', data)
+  }
+
+  basicDetail(data: any) {
+    return this.http.get(this.baseUrl+'basic_detail', data).subscribe((res: any)=>{
+      this.basicDetails = res.data;
+
+      console.log("=====basicDetails=======>", this.basicDetails);
+    })
+  }
+
+  init() {
+    console.log("socket service initialized");
   }
 }
