@@ -36,7 +36,6 @@
                     [data]="multiSelectDrop"
                     [(ngModel)]="selectedItems"
                     (onSelect)="onItemSelect($event)"
-                    (onSelectAll)="onSelectAll($event)"
                     (onFilterChange)="onFilterChange($event)"
                     [ngModelOptions]="{standalone: true}"
                 >
@@ -54,7 +53,6 @@
                          [data]="multiSelectDrop2"
                          [(ngModel)]="selectedItems1"
                          (onSelect)="onItemSelect2($event)"
-                         (onSelectAll)="onSelectAll2($event)"
                          (onFilterChange)="onFilterChange2($event)"
                          [ngModelOptions]="{standalone: true}"
                      >

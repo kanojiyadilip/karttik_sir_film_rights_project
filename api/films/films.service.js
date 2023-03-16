@@ -294,7 +294,7 @@ function createFilmRight(data, callback){
                     film_id: mongoose.Types.ObjectId(data.film_id), 
                     category: category,
                     subCategory: data.subCategory,
-                    natureOfRight: "Exclusive", 
+                    natureOfRight: data.natureOfRight, 
                     expiry: { $lte: new Date() }
                 }
             }, 

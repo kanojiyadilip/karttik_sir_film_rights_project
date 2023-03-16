@@ -115,12 +115,12 @@ export class UserFormComponent implements OnInit {
     //   { item_id: 4, item_text: 'Navsari' }
     // ];
     this.dropdownSettings2 = {
-      singleSelection: false,
+      singleSelection: true,
       idField: 'item_id',
       textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
+      // selectAllText: 'Select All',
+      // unSelectAllText: 'UnSelect All',
+      // itemsShowLimit: 3,
       allowSearchFilter: true
     }; 
     setTimeout(()=>{
@@ -247,6 +247,7 @@ export class UserFormComponent implements OnInit {
       console.log("===searchClientName===>",res);
       this.clientList = res.data;
       this.dropdownList = this.clientList.map((item:any, i: any)=>({item_id: i, item_text: item.name}));
+      this.dropdownList = this.dropdownList.length>0?this.dropdownList:[{item_id: '', item_text: ''}]
       if(ty=="nor"){
         console.log("==selectedItems2==>", this.selectedItems2)
         this.multiSelectDrop = this.dropdownList;
@@ -254,7 +255,7 @@ export class UserFormComponent implements OnInit {
       else{
         console.log("==selectedItems==>", this.selectedItems)
         this.dropdownList = (this.selectedItems.length>0)?this.dropdownList.filter((item:any)=>item.item_text!=this.selectedItems[0].item_text):this.dropdownList;
-        this.multiSelectDrop2 = this.dropdownList;
+        this.multiSelectDrop2 = this.dropdownList.length>0?this.dropdownList:[{item_id: '', item_text: ''}]
       }
       
 

@@ -29,7 +29,7 @@ label{
     transition: .4s;
 }
 
-::ng-deep .multiselect-dropdown .dropdown-list .item2 .multiselect-item-checkbox div{
+::ng-deep .ssel .multiselect-dropdown .dropdown-list .item2 .multiselect-item-checkbox div{
     position: unset !important;
     padding-left: 0 !important;
     
