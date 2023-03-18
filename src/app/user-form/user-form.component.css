@@ -49,3 +49,10 @@ label{
 ::ng-deep .ssel ng-multiselect-dropdown .multiselect-dropdown div .dropdown-btn{
     background: white !important;
 }
+
+::ng-deep .ssel ng-multiselect-dropdow .multiselect-dropdown .dropdown-list ul .multiselect-item-checkbox input[type=checkbox]:checked + div:after {
+    content: "";
+    transition: transform .2s ease-out;
+    transform: rotate(-45deg) scale(1);
+    visibility: hidden !important;
+}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicesService } from '../../services.service';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-data-creation',
@@ -30,6 +31,20 @@ export class DataCreationComponent implements OnInit {
 
     this.service.createUser(formData).subscribe((res:any)=>{
       console.log("===get===>",res);
+      if(res.code == 200){
+        swal.fire(
+          'Record update successfully',
+          '',
+          'success'
+        )
+      }
+      else{
+        swal.fire(
+          "Something went wrong!",
+          '',
+          'error'
+        )
+      }
       // this.countries = res['data']
     });
   }

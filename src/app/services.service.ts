@@ -11,8 +11,8 @@ export class ServicesService {
     this.basicDetail({});
   }
 
-  // baseUrl: any = 'http://43.206.104.242:3001/api/films/'; 
-  baseUrl: any = 'http://localhost:3001/api/films/'; 
+  baseUrl: any = 'http://43.206.104.242:3001/api/films/'; 
+  // baseUrl: any = 'http://localhost:3001/api/films/'; 
   basicDetails: any;
   saveAssign(data: any) {
     // let data = {
