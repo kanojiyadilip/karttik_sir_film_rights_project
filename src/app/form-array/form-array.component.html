@@ -285,17 +285,40 @@
                         </ng-multiselect-dropdown> 
                         
                     </div>
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <label class="lbm">Territories</label>
                         <input class="form-control" type="text" placeholder="Territories" [(ngModel)]="rowObj.ter" name="ter" />
                     </div>
                     <div class="col-md-4">
                         <label class="lbm">Excl. Territories</label>
                         <input class="form-control" type="text" placeholder="Excl. Territories" [(ngModel)]="rowObj.etr" name="etr" />
-                    </div>
+                    </div> -->
                     <div class="col-md-4">
                         <label class="lbm">No. of Runs</label>
                         <input class="form-control" type="text" placeholder="No. of Runs" [(ngModel)]="rowObj.nrn" name="ter" />
+                    </div>
+                    <div class="col-md-12">
+                        <label class="lbm">Territories</label>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ter">
+                            <div *ngFor="let item of ctyData">
+                                <div (click)="territoryData(item.child)" style="cursor: pointer">{{item.parent}}</div>
+                                <ul>
+                                    <li  *ngFor="let val of item.child" (click)="territoryData(val)">{{val.country}}</li>
+                                    <!-- <li>India</li>
+                                    <li>Pakistan</li>
+                                    <li>Shrilanka</li> -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ter">
+                            <ul>
+                                <li *ngFor="let val of ter" (click)="revmoveTerritoryData(val)">{{val.country}}</li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="col-md-4 hights" style="margin-top: 40px;">
                         <button class="btn btn-success" (click)="addNewFilmRight()">Save</button>

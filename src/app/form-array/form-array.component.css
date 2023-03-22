@@ -39,3 +39,13 @@ label{
 .lbm{
     margin-top: 10px;
 }
+
+li{
+    cursor: pointer;
+}
+
+.ter{
+    border: 1px solid #a9a9a9;
+    border-radius: 5px;
+    padding: 10px;
+}

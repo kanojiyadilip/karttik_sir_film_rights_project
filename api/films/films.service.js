@@ -311,7 +311,7 @@ function createFilmRight(data, callback){
                     console.log("==err===>", err);
                     console.log("==doc===>", doc);
             // filmRightSchema.findOne({"film_id": mongoose.Types.ObjectId(data.film_id), natureOfRight: "Exclusive", expiry: { $gte: new Date() }}, (err, doc)=>{
-                if(doc){
+                if(doc.length){
                     callback({
                         code: 420,
                         msg: 'This already sale to '+doc[0].nextjoin['nameOfAssignee']+' now you have to wait for expiry'

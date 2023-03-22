@@ -119,12 +119,9 @@ var filmRightSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    territories: {
+    territories: [{
         type: String
-    },
-    exclTerritories: {
-        type: String
-    },
+    }],
     noOfRuns: {
         type: String
     },

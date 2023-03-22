@@ -36,7 +36,7 @@ export class FormArrayComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    
+    this.getCountryByRegion();
     this.data = this.data.map((e:any)=>({...e, subCategoryVal: this.dropdownList.find((item:any)=>item.item_id == e.subCategory).item_text }))
     // console.log(this.dropdownList.find((item:any)=>item.item_id == 1).item_text,"==========DILIP==========>",this.data);
     
@@ -78,8 +78,10 @@ export class FormArrayComponent implements OnInit {
       "allowSearchFilter": false,
       "limitSelection": -1
     };
-    
+
   }
+
+  ctyData: any;
 
   ref: boolean = false;
 
@@ -176,6 +178,13 @@ export class FormArrayComponent implements OnInit {
         nrn: val.noOfRuns
       }
     }
+
+    for(var i=0; i<val.territories.length; i++){
+      let obj = this.countryData.find(e=>e.id == val.territories[i])
+      this.ter.push(obj);
+    }
+
+    // this.ter = val.territories
     this.displayStyle = "block";
   }
 
@@ -195,8 +204,8 @@ export class FormArrayComponent implements OnInit {
       exlLanguage: this.rowObj.elg,
       commencement: this.rowObj.com,
       expiry: this.rowObj.exp,
-      territories: this.rowObj.ter,
-      exclTerritories: this.rowObj.etr,
+      territories: this.ter.map((e:any)=>e.id),
+      // exclTerritories: this.rowObj.etr,
       noOfRuns: this.rowObj.nrn
     }
     this.service.createFilmRight(req).subscribe((res:any)=>{
@@ -242,6 +251,54 @@ export class FormArrayComponent implements OnInit {
     this.inDetail.exlLanguage = this.inDetail.exlLanguage.map((e:any)=>this.lanList.find((item:any)=>item.item_id == e)).map((e:any)=>e.item_text);
     console.log("this.inDetail=>", this.inDetail)
     this.inDetailVisible = "block";
+  }
+
+  countryData = [
+    {
+      id: '1',
+      country: 'India',
+      region: 'Asia'
+    },
+    {
+      id: '2',
+      country: 'Pakistan',
+      region: 'Asia'
+    },
+    {
+      id: '3',
+      country: 'France',
+      region: 'Europe'
+    }
+  ];
+
+  getCountryByRegion(){
+    let cr = [...new Set(this.countryData.map(e=>e.region))];
+    console.log(cr);
+    let newArray = [];
+    for(var i=0; i<cr.length; i++){
+      newArray.push({
+        parent: cr[i],  
+        child: this.countryData.filter(e=>e.region == cr[i])
+      })
+    }
+    console.log("===newArray===>",newArray);
+    this.ctyData = newArray;
+  }
+
+  ter: any = [];
+  territoryData(val:any){
+    if(val.length){
+    this.ter.push(...val);
+    }
+    else{
+      this.ter.push(val);
+    }
+    this.ter =  [...new Set(this.ter)];
+    console.log(val,'<======>', this.ter);
+  }
+
+  revmoveTerritoryData(val:any){
+    this.ter = this.ter.filter((e:any)=>e.id != val.id)
   }
 
 }
