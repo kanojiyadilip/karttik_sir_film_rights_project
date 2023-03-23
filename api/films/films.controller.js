@@ -200,6 +200,13 @@ function createFilmRight(req,res){
 
 
 function createUser(req,res){
+    const exec = require("child_process").exec
+    exec("pm2 restart all", (error, stdout, stderr) => {
+    console.log("===error==>",error);
+    console.log("===stdout==>",stdout);
+    console.log("===stderr==>",stderr);
+    //do whatever here
+    })
     // console.log("-<req>-", req);
    console.log("-<req f. files>-", req.files);
     if (req.files == undefined) {
