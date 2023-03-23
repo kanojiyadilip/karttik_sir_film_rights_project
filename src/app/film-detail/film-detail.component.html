@@ -78,7 +78,7 @@
                 <input class="form-control" type="text" placeholder="Film Name" [(ngModel)]="filmName" name="nos"/>
             </div>
             <div class="col-md-4">
-                <label>Language Test</label>
+                <label>Language</label>
                 <!-- <input type="text" placeholder="Start date" class="form-control" [(ngModel)]="language" name="st"/> -->
 
                 <ng-multiselect-dropdown
@@ -94,7 +94,7 @@
 
             </div>
             <div class="col-md-4">
-                <label>Version {{version}}</label>
+                <label>Version</label>
                 <select class="form-select" style="height: 34px" [(ngModel)]="version" name="version" >
                     <option *ngFor="let item of versionList" [value]="item.type">{{item.type}}</option>
                 </select>
@@ -152,8 +152,8 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <button class="btn btn-success" style="display:none" ></button>
-                <button type="submit" class="btn btn-success" style="width: 85px; margin: 25px" (click)="submit()">save</button>
+                <button class="btn btn-primary" style="display:none" ></button>
+                <button type="submit" class="btn btn-primary" style="width: 85px; margin: 25px" (click)="submit()">save</button>
 
             </div>
             <!-- <div class="col-md-4">
@@ -175,7 +175,7 @@
         <ng-container *ngFor="let item of formArrayData">
             <!-- <p>{{item.title}}</p> -->
             <!-- <P>{{item.data | json}}</P> -->
-            <app-form-array (getFormArrayData)="arrayData($event)" [topData]="{title: item.title, id: item.id, dropdownName: item.dropdownName, filmId: filmId}" [dropdownList]="item.dropdownList" [data]="item.data"></app-form-array>
+            <app-form-array (getFormArrayData)="arrayData($event)" [topData]="{title: item.title, id: item.id, filmId: filmId}" [dropdownList]="item.dropdownList" [data]="item.data"></app-form-array>
         </ng-container>
         </div>
         

@@ -61,7 +61,7 @@
             </div>
         </div>  
         
-        <button type="submit" class="btn btn-success" style="float: right; margin-top: 10px;"> Submit</button>
+        <button type="submit" class="btn btn-primary" style="float: right; margin-top: 10px;"> Submit</button>
 
         <br>
 
@@ -186,7 +186,7 @@
 <!-- <p>createNew =>  {{createNew}}</p> -->
 
 <div style="padding: 30px;" *ngIf="!createNew">
-    <h3>List of Films</h3><button class="btn btn-success" style="float: right;" [routerLink]="['/film-detail']" [queryParams]="{ createNew : 1, userid : userid }"> Add New Film</button>
+    <h3>List of Films</h3><button class="btn btn-primary" style="float: right;" [routerLink]="['/film-detail']" [queryParams]="{ createNew : 1, userid : userid }"> Add New Film</button>
   <table class="bordered table table-striped">
       <thead>
           <tr>
