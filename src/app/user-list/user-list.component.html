@@ -4,39 +4,41 @@
       <input type="date" placeholder="End date" class="form-control"/>
       <button class="btn btn-success" style="float: right;" >Search</button>
     </div>
-    <button class="btn btn-success" style="float: right;" [routerLink]="['/user']" [queryParams]="{ createNew : 1 }">Add New</button>
-    <table class="table table-striped" style="border: 1px solid black">
-        <thead>
-            <tr>
-          <th scope="col">Sr.</th>
-                <th scope="col">Action</th>
-                <th scope="col">Name of the Assignor</th>
-                <th scope="col">Name of assignee</th>
-                <th scope="col">Date of Agreement</th>
-                <th scope="col">Account</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let country of countries; index as i">
-                <th scope="row">{{ i + 1 }}</th>
-          <td>
-            <div style="display: flex; gap: 15px;">
-            <i class="fa fa-pencil" style="cursor: pointer;" aria-hidden="true" [routerLink]="['/user']" [queryParams]="{ createNew : 0, userid: country._id }"></i>
-            <i class="fa fa-eye" aria-hidden="true"></i>
-            </div>
-          </td>
-                <td>	
-                    {{ country.nameOfAssignor }}
+    <button class="btn btn-success" style="float: right; margin-bottom: 15px;" [routerLink]="['/user']" [queryParams]="{ createNew : 1 }">Add New</button>
+    <div style="margin-top: 20px;">
+      <table class="bordered table table-striped">
+          <thead>
+              <tr>
+            <th scope="col">Sr.</th>
+                  <th scope="col">Action</th>
+                  <th scope="col">Name of the Assignor</th>
+                  <th scope="col">Name of assignee</th>
+                  <th scope="col">Date of Agreement</th>
+                  <th scope="col">Account</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let country of countries; index as i">
+                  <th scope="row">{{ i + 1 }}</th>
+            <td>
+              <div style="display: flex; gap: 15px;">
+              <i class="fa fa-pencil" style="cursor: pointer;" aria-hidden="true" [routerLink]="['/user']" [queryParams]="{ createNew : 0, userid: country._id }"></i>
+              <i class="fa fa-eye" aria-hidden="true"></i>
+              </div>
+            </td>
+                  <td>	
+                      {{ country.nameOfAssignor }}
+                  </td>
+                  <td>
+                    {{ country.nameOfAssignee }}
                 </td>
-                <td>
-                  {{ country.nameOfAssignee }}
-              </td>
-                <td>{{ country.dateOfAgreement | date: 'dd/MM/yyyy' }}</td>
-                <td>
-                  <p *ngIf="country.accountType=='1'">Sale</p>
-                  <p *ngIf="country.accountType=='2'">Purchase</p>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                  <td>{{ country.dateOfAgreement | date: 'dd/MM/yyyy' }}</td>
+                  <td>
+                    <p *ngIf="country.accountType=='1'">Sale</p>
+                    <p *ngIf="country.accountType=='2'">Purchase</p>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+    </div>
   </div>

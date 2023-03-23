@@ -179,9 +179,13 @@ export class FormArrayComponent implements OnInit {
       }
     }
 
-    for(var i=0; i<val.territories.length; i++){
-      let obj = this.countryData.find(e=>e.id == val.territories[i])
-      this.ter.push(obj);
+    if(val.territories){
+      for(var i=0; i<val.territories.length; i++){
+        let obj = this.countryData.find(e=>e.id == val.territories[i])
+        if(obj){
+          this.ter.push(obj);
+        }
+      }
     }
 
     // this.ter = val.territories

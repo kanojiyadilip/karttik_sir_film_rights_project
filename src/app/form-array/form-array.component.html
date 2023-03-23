@@ -173,7 +173,7 @@
             </div>
         </div>  -->
 
-        <table class="table table-striped" style="border: 1px solid black">
+        <table class="bordered table table-striped">
             <thead>
                 <tr>
               <!-- <th scope="col">Sr.</th> -->
@@ -315,7 +315,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="ter">
-                            <ul>
+                            <ul *ngIf="ter?.length > 0">
                                 <li *ngFor="let val of ter" (click)="revmoveTerritoryData(val)">{{val.country}}</li>
                             </ul>
                         </div>

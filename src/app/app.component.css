@@ -1,0 +1,16 @@
+nav{
+    height: 50px;
+    /* background-color: #001e96; */
+
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%; 
+    z-index: 999;
+}
+
+nav h1{
+    color: #fff;
+    padding: 10px;
+}
