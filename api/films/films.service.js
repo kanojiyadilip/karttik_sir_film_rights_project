@@ -6,6 +6,8 @@ var filmRightSchema = require('./films.model').filmRightSchema;
 var fs = require('fs');
 var mongoose = require('mongoose');
 var csvtojson = require('csvtojson');
+const exec = require("child_process").exec
+
 
 module.exports = {
     getAssign,
@@ -296,15 +298,18 @@ function createFilmRight(data, callback){
                         category: category,
                         subCategory: data.subCategory,
                         natureOfRight: "Exclusive", 
-                        expiry: { $lte: new Date() }
+                        // expiry: { $lte: new Date() }
+                        // expiry: { $gte: new Date(data.commencement) },
+                        expiry: { $gte: new Date(data.commencement) },
+                        language: {"$in":lng},
+                        territories: {"$in":data.territories}
                     }
                 }, 
                 {$lookup: {from: "films", localField: "film_id", foreignField:"_id", as:"join"}},
                 {$unwind: "$join"},
-                {$project: { "join.assign_id":1 }},
+                // {$project: { "join.assign_id":1 }},
                 {$lookup: {from: "assigns", localField: "join.assign_id", foreignField:"_id", as:"nextjoin"}},
                 {$unwind: "$nextjoin"},
-                // {$project: { "nextjoin.accountType":1 }},
                 {$match: { "nextjoin.accountType":"1" }}
                 
                 ], (err, doc)=>{
@@ -312,10 +317,66 @@ function createFilmRight(data, callback){
                     console.log("==doc===>", doc);
             // filmRightSchema.findOne({"film_id": mongoose.Types.ObjectId(data.film_id), natureOfRight: "Exclusive", expiry: { $gte: new Date() }}, (err, doc)=>{
                 if(doc.length){
-                    callback({
-                        code: 420,
-                        msg: 'This already sale to '+doc[0].nextjoin['nameOfAssignee']+' now you have to wait for expiry'
-                    })  
+                    var langMatch = [];
+                    var terrMatch = [];
+                    for(var i=0; i<doc.length; i++){
+
+                        lng.forEach(item=>{
+                            let obj = doc[i].language.find(e=>e==item) || {};
+                            if(Object.keys(obj).length){
+                                langMatch.push(obj);
+                            }
+                        });
+                        data.territories.forEach(item=>{
+                            let obj = doc[i].territories.find(e=>e==item) || {};
+                            if(Object.keys(obj).length){
+                                terrMatch.push(obj);
+                            }
+                        });
+                    }
+
+                    if(langMatch.length > 0 && terrMatch.length > 0){
+                        callback({
+                            code: 420,
+                            msg: 'This already sale to '+doc[0].nextjoin['nameOfAssignee']+' now you have to wait for expiry'
+                        }) 
+                    }
+                    else{
+                        var filmRightInstance = new filmRightSchema({
+                            film_id: data.film_id,
+                            category: data.category,
+                            subCategory: data.subCategory,
+                            natureOfRight: data.natureOfRight,
+                            deliveryTcqc: data.deliveryTcqc,
+                            language: lng,
+                            exlLanguage: exlng,
+                            commencement: data.commencement,
+                            expiry: data.expiry,
+                            territories: data.territories,
+                            exclTerritories: data.exclTerritories,
+                            noOfRuns: data.noOfRuns
+                        });
+                
+                        console.log("-<filmRightInstance>-1-", filmRightInstance);
+                
+                        filmRightInstance.save((err, doc)=>{
+                            if(doc){
+                                callback({
+                                    code: 200,
+                                    msg: 'data saved Successfully',
+                                    data: doc
+                                })
+                            }
+                            else{
+                                console.log("err->", err);
+                                callback({
+                                    code: 400,
+                                    msg: 'Somthing went wrong.'+err
+                                })    
+                            }
+                            
+                        })                        
+                    }     
                 }
                 else{
 
@@ -334,7 +395,7 @@ function createFilmRight(data, callback){
                         noOfRuns: data.noOfRuns
                     });
             
-                    console.log("-<filmRightInstance>-", filmRightInstance);
+                    console.log("-<filmRightInstance>-2-", filmRightInstance);
             
                     filmRightInstance.save((err, doc)=>{
                         if(doc){
@@ -471,6 +532,7 @@ function createUser(req, callback){
         stream.once('open', (fd)=>{
             stream.write(JSON.stringify(json));
             stream.end();
+            // exec("ls", (error, stdout, stderr) => {})
             callback({
                 code: 200,
                 msg: 'data saved Successfully',
