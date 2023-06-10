@@ -1,6 +1,7 @@
 
 
 var assignSchema = require('./films.model').assignSchema;
+var clientSchema = require('./films.model').clientSchema;
 var filmSchema = require('./films.model').filmSchema;
 var filmRightSchema = require('./films.model').filmRightSchema;
 var fs = require('fs');
@@ -18,7 +19,74 @@ module.exports = {
     searchClient,
     createFilmRight,
     createUser,
-    basicDetail
+    basicDetail,
+    createClient,
+    getClient
+}
+
+function createClient(data, callback){
+
+    console.log("-<createClient>-", data);
+
+    clientSchema.find({name: data.body.clientName},(err, doc)=>{
+        if(!doc){
+
+            var clientDoc = new clientSchema({
+                name: data.body.clientName.toLowerCase()
+            });
+
+            console.log("-<clientDoc>-", clientDoc);
+
+            clientDoc.save((err, doc)=>{
+                if(doc){
+                    callback({
+                        code: 200,
+                        msg: 'data saved Successfully',
+                        data: doc
+                    })
+                }
+                else{
+                    console.log("err->", err);
+                    callback({
+                        code: 400,
+                        msg: 'Somthing went wrong.'+err
+                    })    
+                }
+            
+            })
+        }
+        else{
+            callback({
+                code: 400,
+                msg: 'Client name is already exist.',
+                data: doc
+            })
+        }
+    })    
+}
+
+function getClient(data, callback){
+
+    console.log("-<tourData>-", data);
+
+    clientSchema.find({},(err, doc)=>{
+        if(doc){
+            callback({
+                code: 200,
+                msg: 'data get Successfully',
+                data: doc
+            })
+        }
+        else{
+            console.log("err->", err);
+            callback({
+                code: 400,
+                msg: 'Somthing went wrong.'+err
+            })    
+        }
+        
+    })
+    
 }
 
 function createAssign(data, callback){
@@ -78,9 +146,15 @@ function createAssign(data, callback){
 
 function getAssign(data, callback){
 
+    
     console.log("-<tourData>-", data);
 
-    assignSchema.find({},(err, doc)=>{
+    assignSchema.aggregate([
+        {$lookup: {from: "clients", localField: "nameOfAssignor", foreignField:"_id", as:"nor"}},
+        {$unwind: "$nor"},
+        {$lookup: {from: "clients", localField: "nameOfAssignee", foreignField:"_id", as:"nee"}},
+        {$unwind: "$nee"},
+    ],(err, doc)=>{
         if(doc){
             callback({
                 code: 200,
@@ -248,6 +322,7 @@ function getFilmRightList(data, callback){
 
 function createFilmRight(data, callback){
     let lng  = data.language.map((item)=>item.item_id);
+    lng = lng.map(e=>String(e));
     let exlng  = data.exlLanguage.map((item)=>item.item_id);
     if(data.film_right_id){
 
@@ -286,8 +361,8 @@ function createFilmRight(data, callback){
         })
     }
     else{
-        if(data.natureOfRight == 'Exclusive'){
-            console.log("-<data>-", data);
+        // if(data.natureOfRight == 'Exclusive'){
+            // console.log("-<data>-", data);
             // let lng  = data.language.map((item)=>item.item_id);
             // let exlng  = data.exlLanguage.map((item)=>item.item_id);
             let category = String(data.category);
@@ -297,7 +372,7 @@ function createFilmRight(data, callback){
                         film_id: mongoose.Types.ObjectId(data.film_id), 
                         category: category,
                         subCategory: data.subCategory,
-                        natureOfRight: "Exclusive", 
+                        // natureOfRight: "Exclusive", 
                         // expiry: { $lte: new Date() }
                         // expiry: { $gte: new Date(data.commencement) },
                         expiry: { $gte: new Date(data.commencement) },
@@ -310,7 +385,7 @@ function createFilmRight(data, callback){
                 // {$project: { "join.assign_id":1 }},
                 {$lookup: {from: "assigns", localField: "join.assign_id", foreignField:"_id", as:"nextjoin"}},
                 {$unwind: "$nextjoin"},
-                {$match: { "nextjoin.accountType":"1" }}
+                {$match: { "nextjoin.accountType":"1", natureOfRight: "Exclusive" }}
                 
                 ], (err, doc)=>{
                     console.log("==err===>", err);
@@ -338,7 +413,7 @@ function createFilmRight(data, callback){
                     if(langMatch.length > 0 && terrMatch.length > 0){
                         callback({
                             code: 420,
-                            msg: 'This already sale to '+doc[0].nextjoin['nameOfAssignee']+' now you have to wait for expiry'
+                            msg: 'This already sale to '+doc[0].nextjoin['name']+' now you have to wait for expiry'
                         }) 
                     }
                     else{
@@ -358,6 +433,11 @@ function createFilmRight(data, callback){
                         });
                 
                         console.log("-<filmRightInstance>-1-", filmRightInstance);
+                        // callback({
+                        //     code: 200,
+                        //     msg: 'NOT AVAILABLE 1',
+                        //     data: doc
+                        // })
                 
                         filmRightInstance.save((err, doc)=>{
                             if(doc){
@@ -395,82 +475,87 @@ function createFilmRight(data, callback){
                         noOfRuns: data.noOfRuns
                     });
             
-                    console.log("-<filmRightInstance>-2-", filmRightInstance);
-            
-                    filmRightInstance.save((err, doc)=>{
-                        if(doc){
-            
-                            // let filmRights = data.fRights.map(item=>({...item, film_id: doc._id}));
-                            // console.log("=filmRights=>",filmRights);
-                            // filmRightSchema.insertMany(filmRights, (err, docs)=>{
-                            //     console.log("=err==>", err);
-                            //     console.log("=docs==>", docs);
-            
-                                callback({
-                                    code: 200,
-                                    msg: 'data saved Successfully',
-                                    data: doc
-                                })
-                            // })
-                        }
-                        else{
-                            console.log("err->", err);
-                            callback({
-                                code: 400,
-                                msg: 'Somthing went wrong.'+err
-                            })    
-                        }
-                        
-                    })
-
-                }
-            })
-        }
-        else{
-
-            var filmRightInstance = new filmRightSchema({
-                film_id: data.film_id,
-                category: data.category,
-                subCategory: data.subCategory,
-                natureOfRight: data.natureOfRight,
-                deliveryTcqc: data.deliveryTcqc,
-                language: lng,
-                exlLanguage: exlng,
-                commencement: data.commencement,
-                expiry: data.expiry,
-                territories: data.territories,
-                exclTerritories: data.exclTerritories,
-                noOfRuns: data.noOfRuns
-            });
-    
-            // console.log("-<filmRightInstance>-", filmRightInstance);
-    
-            filmRightInstance.save((err, doc)=>{
-                if(doc){
-    
-                    // let filmRights = data.fRights.map(item=>({...item, film_id: doc._id}));
-                    // console.log("=filmRights=>",filmRights);
-                    // filmRightSchema.insertMany(filmRights, (err, docs)=>{
-                    //     console.log("=err==>", err);
-                    //     console.log("=docs==>", docs);
-    
-                        callback({
-                            code: 200,
-                            msg: 'data saved Successfully',
-                            data: doc
-                        })
+                    // console.log("-<filmRightInstance>-2-", filmRightInstance);
+                    // callback({
+                    //     code: 200,
+                    //     msg: 'NOT AVAILABLE 2',
+                    //     data: doc
                     // })
+            
+                    // filmRightInstance.save((err, doc)=>{
+                    //     if(doc){
+            
+                    //         // let filmRights = data.fRights.map(item=>({...item, film_id: doc._id}));
+                    //         // console.log("=filmRights=>",filmRights);
+                    //         // filmRightSchema.insertMany(filmRights, (err, docs)=>{
+                    //         //     console.log("=err==>", err);
+                    //         //     console.log("=docs==>", docs);
+            
+                    //             callback({
+                    //                 code: 200,
+                    //                 msg: 'data saved Successfully',
+                    //                 data: doc
+                    //             })
+                    //         // })
+                    //     }
+                    //     else{
+                    //         console.log("err->", err);
+                    //         callback({
+                    //             code: 400,
+                    //             msg: 'Somthing went wrong.'+err
+                    //         })    
+                    //     }
+                        
+                    // })
+
                 }
-                else{
-                    console.log("err->", err);
-                    callback({
-                        code: 400,
-                        msg: 'Somthing went wrong.'+err
-                    })    
-                }
-                
             })
-        }
+        // }
+        // else{
+
+        //     var filmRightInstance = new filmRightSchema({
+        //         film_id: data.film_id,
+        //         category: data.category,
+        //         subCategory: data.subCategory,
+        //         natureOfRight: data.natureOfRight,
+        //         deliveryTcqc: data.deliveryTcqc,
+        //         language: lng,
+        //         exlLanguage: exlng,
+        //         commencement: data.commencement,
+        //         expiry: data.expiry,
+        //         territories: data.territories,
+        //         exclTerritories: data.exclTerritories,
+        //         noOfRuns: data.noOfRuns
+        //     });
+    
+        //     // console.log("-<filmRightInstance>-", filmRightInstance);
+    
+        //     filmRightInstance.save((err, doc)=>{
+        //         if(doc){
+    
+        //             // let filmRights = data.fRights.map(item=>({...item, film_id: doc._id}));
+        //             // console.log("=filmRights=>",filmRights);
+        //             // filmRightSchema.insertMany(filmRights, (err, docs)=>{
+        //             //     console.log("=err==>", err);
+        //             //     console.log("=docs==>", docs);
+    
+        //                 callback({
+        //                     code: 200,
+        //                     msg: 'data saved Successfully',
+        //                     data: doc
+        //                 })
+        //             // })
+        //         }
+        //         else{
+        //             console.log("err->", err);
+        //             callback({
+        //                 code: 400,
+        //                 msg: 'Somthing went wrong.'+err
+        //             })    
+        //         }
+                
+        //     })
+        // }
     }
 }
 

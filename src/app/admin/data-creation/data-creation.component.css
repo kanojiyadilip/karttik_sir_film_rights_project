@@ -1,0 +1,19 @@
+.add_icon{
+    width: 5px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.icncl{
+    display: flex;
+    gap: 20px;
+    width: 50px;
+    font-size: 15px;
+    margin-top: 8px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+input{
+    text-transform: lowercase;
+}

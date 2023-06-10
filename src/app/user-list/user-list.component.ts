@@ -9,17 +9,6 @@ interface Country {
 	_id: string
 }
 
-const COUNTRIES: Country[] = [
-  {
-		nameOfAssignee: 'Harish GALA',
-		nameOfAssignor: 'DILIP',
-		flag: 'f/f3/Flag_of_Russia.svg',
-		dateOfAgreement: '01/01/2016',
-		accountType: 'Sales',
-		_id: '123',
-	}
-];
-
 
 @Component({
   selector: 'app-user-list',
@@ -28,7 +17,7 @@ const COUNTRIES: Country[] = [
 })
 export class UserListComponent implements OnInit {
 
-  countries = COUNTRIES;
+  countries: any = [];
 
   constructor(private service: ServicesService) { }
 

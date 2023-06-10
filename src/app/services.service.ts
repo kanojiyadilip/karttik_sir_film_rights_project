@@ -65,4 +65,12 @@ export class ServicesService {
   init() {
     console.log("socket service initialized");
   }
+
+  createClient(data: any) {
+    return this.http.post(this.baseUrl+'create_client', data)
+  }
+
+  getClient(data: any) {
+    return this.http.get(this.baseUrl+'get_client', data)
+  }
 }

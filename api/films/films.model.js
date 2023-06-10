@@ -1,12 +1,34 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var assignSchema = new Schema({
-    nameOfAssignor: {
+var clientSchema = new Schema({
+    name: {
         type: String
     },
+    active:{
+        type: Boolean,
+        default: true
+    },    
+    created_timestamp: {
+        type: Number,
+        default: new Date().valueOf()
+    },
+    updated_timestamp: {
+        type: Number,
+        default: new Date().valueOf()
+    } 
+});
+
+module.exports.clientSchema = mongoose.model('Client', clientSchema);
+
+var assignSchema = new Schema({
+    nameOfAssignor: {
+        type: Schema.Types.ObjectId, 
+        ref: 'Client'
+    },
     nameOfAssignee: {
-        type: String
+        type: Schema.Types.ObjectId, 
+        ref: 'Client'
     },
     accountType: {
         type: String

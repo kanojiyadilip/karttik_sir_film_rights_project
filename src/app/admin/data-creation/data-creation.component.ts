@@ -12,6 +12,7 @@ export class DataCreationComponent implements OnInit {
   constructor(private service: ServicesService) { }
 
   ngOnInit(): void {
+    this.getCl();
   }
 
   public changeListener(fileInput: any) {
@@ -48,6 +49,55 @@ export class DataCreationComponent implements OnInit {
       // this.countries = res['data']
     });
   }
-  
 
+  client: any = [{name: "DILP"}];
+  add: boolean = false;
+  clientName: any;
+  saveName(cn: any){
+
+    if(cn){
+      this.service.createClient({clientName: cn}).subscribe((res:any)=>{
+        console.log("===get===>",res);
+        if(res.code == 200){
+          this.add = false;
+          this.getCl();
+          swal.fire(
+            'Record update successfully',
+            '',
+            'success'
+          )
+        }
+        else{
+          swal.fire(
+            res.msg,
+            '',
+            'error'
+          )
+        }
+      });
+    }
+  }
+
+  getCl(){
+
+    this.service.getClient({}).subscribe((res:any)=>{
+      console.log("===get===>",res);
+      if(res.code == 200){
+        this.client = res.data;
+      }
+      else{
+        swal.fire(
+          "Something went wrong!",
+          '',
+          'error'
+        )
+      }
+    });
+  }
+
+  lowerCase(event:any, val: any){
+    console.log("event=>", event)
+    val = val.toLowerCase();
+    // return val.toLowerCase()
+  }
 }

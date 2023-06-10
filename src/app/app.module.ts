@@ -23,6 +23,7 @@ import { FormArrayComponent } from './form-array/form-array.component';
 import { AddChipComponent } from './add-chip/add-chip.component';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataCreationComponent } from './admin/data-creation/data-creation.component';
+import { DropdownListModule } from 'ngx-dropdown-list';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { DataCreationComponent } from './admin/data-creation/data-creation.compo
         component: UserFormComponent,
         // pathMatch: 'full',
       }
-    ] )
+    ] ),
+    DropdownListModule
     // JsonPipe,
     // NgbModule
     // DpDatePickerModule

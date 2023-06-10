@@ -12,3 +12,47 @@
     </div>
 <!-- </div> -->
 <!-- <button class="btn btn-success">Upload CSV</button> -->
+
+
+
+
+
+
+<table class="bordered table table-striped">
+    <thead>
+        <tr>
+            <th scope="col" style="width: 8%; text-align: center;">
+                <div (click)="add=true" class="add_icon fa fa-plus-square" aria-hidden="true"></div></th>
+            <th scope="col" style="width: 8%; text-align: center">Action</th>
+            <th scope="col">Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngIf="add">
+            <td>
+            </td>
+            <td>
+                <div class="icncl" >
+                <i class="fa fa-check" style="cursor: pointer;" (click)="saveName(clientName)"></i>
+                <i class="fa fa-remove" style="cursor: pointer;" (click)="add=false"></i>
+                </div>
+            </td>
+            <td>
+                <!-- {{clientName}} -->
+                <input type="text" class="form-control" name="cname" [(ngModel)]="clientName" (keyup)="lowerCase($event, clientName)" [maxlength]="30"/>
+            </td>
+        </tr>
+        <ng-container *ngIf="!add">
+        <tr *ngFor="let item of client; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>
+                <div style="display: flex; gap: 15px;">
+                <i class="fa fa-pencil" ></i>
+                </div>
+            </td>
+            <td> {{item.name}}</td>
+      
+        </tr>
+        </ng-container>
+    </tbody>
+</table>

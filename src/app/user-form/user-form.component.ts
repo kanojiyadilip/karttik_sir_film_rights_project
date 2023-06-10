@@ -33,6 +33,7 @@ export class UserFormComponent implements OnInit {
     //   { item_id: 5, item_text: 'Telgu' }
     // ];
     console.log("==createNew==>",this.createNew);
+    this.getCl();
   }
 
   changed(text: string) {
@@ -161,12 +162,25 @@ export class UserFormComponent implements OnInit {
 
   onFilterChange2(event: any) {
     console.log("===>",event);
-    this.search(event, "nee");
+    // this.search(event, "nee");
+    let snd = this.dropdownList;
+    snd = (this.selectedItems.length>0)?snd.filter((item:any)=>item.item_text!=this.selectedItems[0].item_text):snd;
+
+
+    snd = snd.filter((e:any)=>e.item_text.substr(0,event.length) == event);
+    this.multiSelectDrop2 = snd;
+    console.log(snd);
+
   }
 
   onFilterChange(event: any){
     console.log("event", event);
-    this.search(event, "nor");
+    // this.search(event, "nor");
+
+    let fst = this.dropdownList.filter((e:any)=>e.item_text.substr(0,event.length) == event);
+    this.multiSelectDrop = fst;
+    console.log(this.dropdownList);
+    // this.multiSelectDrop =
   
   }
 
@@ -210,8 +224,8 @@ export class UserFormComponent implements OnInit {
     console.log(this.selectedItems,this.selectedItems,"<====data====>", data);
     console.log(this.selectedItems1,this.selectedItems,"<====data====>", data.value);
     let val = {
-      nameOfAssignor: this.selectedItems[0].item_text,// data.value.nameOfAssignor,
-      nameOfAssignee: this.selectedItems1[0].item_text,// data.value.nameOfAssignee,
+      nameOfAssignor: this.maxRowsLimitation,// data.value.nameOfAssignor, 
+      nameOfAssignee: this.maxRowsLimitation2,// data.value.nameOfAssignee,
       dateOfAgreement: data.value.dateOfAssignor, 
       accountType: data.value.accountVal
     }
@@ -266,6 +280,42 @@ export class UserFormComponent implements OnInit {
     console.log("=event=>", event);
   }
 
-  
 
+  client: any = [];
+  getCl(){
+
+    this.service.getClient({}).subscribe((res:any)=>{
+      console.log("===get===>",res);
+      if(res.code == 200){
+        this.client = res.data;
+
+        // this.dropdownList = this.client.map((item:any, i: any)=>({item_id: item._id, item_text: item.name}));
+        // this.dropdownList = this.dropdownList.length>0?this.dropdownList:[{item_id: '', item_text: ''}]
+        // this.multiSelectDrop = this.dropdownList;
+        // console.log("===this.dropdownList===>",this.dropdownList);
+        this.optionItems = this.client.map((item:any, i: any)=>({id: item._id, value: item._id, text: item.name}));
+        this.optionItems2 = this.client.map((item:any, i: any)=>({id: item._id, value: item._id, text: item.name}));
+      }
+      else{
+        swal.fire(
+          "Something went wrong!",
+          '',
+          'error'
+        )
+      }
+    });
+  }
+  optionItems = [
+    {id: 'Max 1',     value: 'Max 2',     text: 'Maximum 3'},
+    {id: 'Average', value: 'Average', text: 'Average'},
+    {id: 'Sum',     value: 'Sum',     text: 'Total'},
+    {id: 'Last',    value: 'Last',    text: 'Last'}
+  ];
+
+  optionItems2: any = [];
+  maxRowsLimitation: any;
+  maxRowsLimitation2: any;
+  onChange(event: any){
+    console.log(this.maxRowsLimitation,event)
+  }
 }

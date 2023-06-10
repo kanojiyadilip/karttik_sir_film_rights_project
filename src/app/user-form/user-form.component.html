@@ -30,7 +30,18 @@
                </datalist> -->
 
                <div class="ssel">
-               <ng-multiselect-dropdown
+                <ngx-dropdown-list 
+                    [(selectedValue)]="maxRowsLimitation"
+                    (selectionChange)="onChange($event)"
+                    [items]="optionItems"
+                    [multiSelection]="false"
+                    [placeHolder]="'Select'"
+                    [filterBox]="true"
+                    [formatNumber]="true"
+                    [disabled]="false">
+                </ngx-dropdown-list>
+                
+               <!-- <ng-multiselect-dropdown
                     [placeholder]="'Name of the Assignor'"
                     [settings]="dropdownSettings"
                     [data]="multiSelectDrop"
@@ -39,7 +50,7 @@
                     (onFilterChange)="onFilterChange($event)"
                     [ngModelOptions]="{standalone: true}"
                 >
-                </ng-multiselect-dropdown> 
+                </ng-multiselect-dropdown>  -->
                 </div>
 
             </div>
@@ -47,7 +58,7 @@
                 <label>Name of Assignee</label>
                 <!-- <input class="form-control" type="text" [(ngModel)]="nameOfAssignee" placeholder="Name of assignee" name="nameOfAssignee"/> -->
                 <div class="ssel">
-                    <ng-multiselect-dropdown
+                    <!-- <ng-multiselect-dropdown
                          [placeholder]="'Name of Assignee'"
                          [settings]="dropdownSettings2"
                          [data]="multiSelectDrop2"
@@ -56,7 +67,19 @@
                          (onFilterChange)="onFilterChange2($event)"
                          [ngModelOptions]="{standalone: true}"
                      >
-                    </ng-multiselect-dropdown> 
+                    </ng-multiselect-dropdown>  -->
+                
+                    <ngx-dropdown-list 
+                        [(selectedValue)]="maxRowsLimitation2"
+                        (selectionChange)="onChange($event)"
+                        [items]="optionItems2"
+                        [multiSelection]="false"
+                        [placeHolder]="'Select'"
+                        [filterBox]="true"
+                        [formatNumber]="true"
+                        [disabled]="false">
+                    </ngx-dropdown-list>                    
+                
                 </div>
             </div>
         </div>  

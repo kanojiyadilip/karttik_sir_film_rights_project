@@ -16,6 +16,8 @@ router.post('/create_film_right', createFilmRight);
 router.post('/create_user', createUser);
 router.post('/search_cl', searchClient);
 router.get('/basic_detail', basicDetail);
+router.post('/create_client', createClient);
+router.get('/get_client', getClient);
 
 
 module.exports = router;
@@ -236,6 +238,32 @@ function basicDetail(req,res){
 
     filmService.basicDetail(req, function (result) {
         // if error is there
+        if (result instanceof Error) {
+            res.status(200).json(result)
+        }
+        // if there is no error
+        else {
+            res.status(200).json(result)
+        }
+    })
+}
+
+function createClient(req, res){
+
+    filmService.createClient(req, function (result){
+        if (result instanceof Error) {
+            res.status(200).json(result)
+        }
+        // if there is no error
+        else {
+            res.status(200).json(result)
+        }
+    })
+}
+    
+function getClient(req, res){
+
+    filmService.getClient(req, function (result){
         if (result instanceof Error) {
             res.status(200).json(result)
         }
