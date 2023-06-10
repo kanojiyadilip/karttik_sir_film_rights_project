@@ -29,7 +29,7 @@ function createClient(data, callback){
     console.log("-<createClient>-", data);
 
     clientSchema.find({name: data.body.clientName},(err, doc)=>{
-        if(!doc){
+        if(doc.length<1){
 
             var clientDoc = new clientSchema({
                 name: data.body.clientName.toLowerCase()
