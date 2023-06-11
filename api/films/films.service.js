@@ -482,31 +482,31 @@ function createFilmRight(data, callback){
                     //     data: doc
                     // })
             
-                    // filmRightInstance.save((err, doc)=>{
-                    //     if(doc){
+                    filmRightInstance.save((err, doc)=>{
+                        if(doc){
             
-                    //         // let filmRights = data.fRights.map(item=>({...item, film_id: doc._id}));
-                    //         // console.log("=filmRights=>",filmRights);
-                    //         // filmRightSchema.insertMany(filmRights, (err, docs)=>{
-                    //         //     console.log("=err==>", err);
-                    //         //     console.log("=docs==>", docs);
+                            // let filmRights = data.fRights.map(item=>({...item, film_id: doc._id}));
+                            // console.log("=filmRights=>",filmRights);
+                            // filmRightSchema.insertMany(filmRights, (err, docs)=>{
+                            //     console.log("=err==>", err);
+                            //     console.log("=docs==>", docs);
             
-                    //             callback({
-                    //                 code: 200,
-                    //                 msg: 'data saved Successfully',
-                    //                 data: doc
-                    //             })
-                    //         // })
-                    //     }
-                    //     else{
-                    //         console.log("err->", err);
-                    //         callback({
-                    //             code: 400,
-                    //             msg: 'Somthing went wrong.'+err
-                    //         })    
-                    //     }
+                                callback({
+                                    code: 200,
+                                    msg: 'data saved Successfully',
+                                    data: doc
+                                })
+                            // })
+                        }
+                        else{
+                            console.log("err->", err);
+                            callback({
+                                code: 400,
+                                msg: 'Somthing went wrong.'+err
+                            })    
+                        }
                         
-                    // })
+                    })
 
                 }
             })

@@ -40,7 +40,7 @@ export class FilmDetailComponent implements OnInit {
         // ];
         if(Object.getOwnPropertyNames(this.filmData).length){
           this.filmName = this.filmData.nameOfFilm;
-          this.language = this.filmData.language.map((e:any)=>this.selectedItems.find((item:any)=>item.item_id == e));
+          this.language = this.filmData.language.map((e:any)=>this.multiSelectDrop.find((item:any)=>item.item_id == e));
           this.selectedItems = this.language;
           console.log("==language==>", this.language)
           this.version = this.filmData.version;
@@ -117,9 +117,9 @@ export class FilmDetailComponent implements OnInit {
     ];
 
     this.selectedItems = [
-      {item_id: 2, item_text: 'English'},
-      { item_id: 4, item_text: 'Gujrati' },
-      { item_id: 5, item_text: 'Telgu' }
+      // {item_id: 2, item_text: 'English'},
+      // { item_id: 4, item_text: 'Gujrati' },
+      // { item_id: 5, item_text: 'Telgu' }
     ];
     this.dropdownSettings = {
       singleSelection: false,

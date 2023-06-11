@@ -194,6 +194,8 @@ export class FormArrayComponent implements OnInit {
 
   closePopup() {
     this.displayStyle = "none";
+    window.location.reload();
+
   }
 
   addNewFilmRight(){

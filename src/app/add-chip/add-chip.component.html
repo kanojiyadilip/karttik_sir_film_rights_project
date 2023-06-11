@@ -1,4 +1,4 @@
-<div  class="horizontal" >
+<div  class="horizontal border" >
     <input type="text" placeholder="add" class="form-control chiptext" [(ngModel)]="val" (window:keypress)="enter($event)"/>
     <ng-container *ngFor="let item of chip; let i=index">
         <span><p>{{item}}</p><i class="fa fa-close" style="margin-left: 5px; cursor: pointer;" (click)="remChip(i)"></i></span>
